@@ -1,0 +1,270 @@
+#principio
+
+{
+    background-color: black;
+    text-align: center;
+    color: white;
+}
+
+.card
+{
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+    margin-top: 10px;
+    border: 8px solid black;
+    border-radius: 20px;
+
+}
+.card-title
+{
+    font-family: 'Quicksand', sans-serif;
+    color: orangered;
+    font-size: 23px;
+    font-weight: bolder;
+}
+.btn-primario
+{
+    color: black;
+    background-color: orangered;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+
+    cursor: pointer;
+    border-radius: 16px;
+    font-family: 'Quicksand', sans-serif;
+
+}
+
+.btn-primario:hover
+{
+    background-color: black;
+    color: orangered;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+    text-align: center;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    font-weight: bolder;
+}
+
+.pagination a.active {
+  background-color: white;
+  color: black;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: white;
+    text-decoration: none
+}
+
+
+
+.btn-crear
+{
+    color: white;
+    background-color: black;
+    border: 4px solid white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+    font-family: 'Quicksand', sans-serif;
+    width: 100%;
+    font-weight: bolder;
+    font-size: 30px;
+
+}
+
+
+.btn-crear:hover
+{
+    color: black;
+    background-color: white;
+    border: 4px solid black;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.btn-secundario
+{
+    color: white;
+    background-color: black;
+    border: 4px solid white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+}
+
+p, label, h1, input, select, option, h5, a, li, h2, th, td, h3
+{
+    font-family: 'Quicksand', sans-serif;
+
+}
+
+
+footer {
+      background-color:#343a40;
+      color: white;
+      padding: 15px;
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+
+
+.btn-secundario:hover
+{
+    color: black;
+    background-color: white;
+    border: 4px solid black;
+    font-family: 'Quicksand', sans-serif;
+}
+.display-4
+
+{
+    font-family: 'Quicksand', sans-serif;
+    color: orangered;
+    font-size: 100px;
+    text-align: center;
+}
+
+.modalcoment2
+{
+    background-color: #23272b;
+
+}
+
+.modalabel
+{
+    color: orangered;
+    text-align: left;
+
+}
+
+.modaltitulo
+{
+    text-align: center;
+    color: orangered;
+
+}
+
+.closebtn
+{
+    width: 50px;
+    height: 50px;
+    border: none;
+    color: black;
+    background-color: orangered;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.closebtn:hover
+{
+    color: orangered;
+    background-color: black;
+
+}
+.ekis
+{
+
+    font-size: 35px;
+    font-weight: bolder;
+}
+
+.filtro
+{
+    background-color: black;
+    color: white;
+    padding: 12px;
+
+
+    margin-right: 1px;
+}
+
+#filtrar
+
+{
+    padding: 16px;
+    margin: 0;
+
+}
+
+#filtrar:hover
+{
+    background-color: white;
+    color: black;
+}
+
+.nav-item:hover
+{
+    border-bottom: 2px solid orangered;
+
+
+}
+#banner1, #banner2, #banner3, #banner4, #banner5
+{
+    color: orangered;
+    font-size: 18px;
+}
+
+.evento-tabla
+{
+    color: white;
+}
+
+.evento-tabla:hover
+{
+    color: orangered;
+}
+
+.estado-aprobado
+{
+    color: green;
+    font-weight: bolder;
+}
+
+.estado-eliminado
+{
+    color: red;
+    font-weight: bolder;
+}
+
+.estado-pendiente
+{
+    color: gray;
+    font-weight: bolder;
+}
+
+.navbar-brand
+{
+
+    font-family: 'Quicksand', sans-serif;
+    color: orangered;
+}
+
+.pagina-principal-bienvenida
+{
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    text-align: left;
+    font-size: larger;
+    font-weight: bolder;
+}

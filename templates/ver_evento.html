@@ -1,0 +1,199 @@
+{% extends 'cabecerapie.html' %}
+{% from "Macros.html" import comments_admin, comments %}
+{% from "Macros_form.html" import mostrar_campo,mostrar_campo_radio, mostrar_campo_submit %}
+
+{% block contenido %}
+
+
+
+<h1 class="display-4" style="margin-top: 45px"> {{evento["nombre"]}} </h1>
+
+{% block flash%}
+
+{{ super() }}
+
+{% endblock %}
+
+<div class="jumbotron" style="background-color: rgba(248, 207, 205, 0.4)">
+
+
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <img src="{{url_for('static', filename = 'images/'+evento["imagen"] )}}" class="card-img-top" alt="...">
+
+        </div>
+
+        <div class="col-md-7" id="evento_titulo">
+
+
+            <p>creado por {{evento["usuario"]}} </p>
+
+            <div class="row">
+                        <div class="col-md-2">
+                            <h4> <span class="badge badge-dark"> <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span> Fecha</span> </h4> {{evento["fecha"]}}
+                        </div>
+
+                         <div class="col-md-2">
+                             <h4> <span class="badge badge-dark"> <span class="oi oi-clock" title="clock" aria-hidden="true"></span> Hora</span>  </h4> {{evento["hora"]}}
+                         </div>
+
+                        <div class="col-md-5">
+                            <h4> <span class="badge badge-dark"> <span class="oi oi-map-marker" title="place" aria-hidden="true"></span> Lugar</span> </h4> {{evento["lugar"]}}
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h4> <span class="badge badge-dark"> <span class="oi oi-tag" aria-hidden="true"></span> Categoria </span> </h4> {{evento["tipo"]}}
+
+                        </div>
+            </div>
+            <hr>
+            <div class="row">
+                <p>
+                    {{evento["descripcion"]}}
+                </p>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    {% if admin is sameas true %}
+
+
+    <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-2" style="text-align: left">
+                <a href="{{ url_for('actualizar', id = evento["eventoId"]) }}" class="btn btn btn-secundario btn-lg">
+                    Editar evento
+                    <span class="oi oi-pencil"></span>
+                </a>
+            </div>
+
+
+            <div class="col-md-2" style="text-align: right">
+                <a href="{{ url_for('eliminarEventoById', id = evento["eventoId"]) }}" class="btn btn-secundario btn-lg">
+                    Eliminar
+                    <span class="oi oi-trash"></span>
+                </a>
+            </div>
+
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+
+
+
+<div class="row">
+     <div class="col-md-4">
+            <h2 style="color: white">Comentarios</h2>
+            <br/>
+     </div>
+    <div class="col-md-5"></div>
+
+
+
+        {% if current_user.is_authenticated %}
+
+        <div class="col-md-3" style="text-align: right">
+
+
+            <button type="button" class="btn btn btn-secundario btn-lg" data-toggle="modal" data-target="#modal_comment">
+                Agregar comentario
+            </button>
+        </div>
+
+        {% else %}
+
+        <div class="col-md-3" style="text-align: right">
+
+
+            <a href="{{ url_for('ingresar') }}" class="btn btn btn-secundario btn-lg">
+                Agregar comentario
+            </a>
+        </div>
+
+
+        {% endif %}
+
+        <div class="modal fade" id="modal_comment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered modalcoment1" role="document">
+
+                <form method="POST" action="{{ url_for('vistaevento', id=evento["eventoId"]) }}"  enctype="multipart/form-data" >
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+            <div class="modal-content modalcoment2">
+            <div class="modal-header">
+                <h3 class="modal-title modaltitulo" id="exampleModalCenterTitle" style="text-align: center;">Comentar Evento</h3>
+                <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" class="ekis">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                {{ mostrar_campo(formulario.contenido, class='form-control', style="width: 490px; height: 170px" )}}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                {{ mostrar_campo_submit(formulario.submit , class='btn btn-primario')}}
+            </div>
+            </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+
+
+    <div class="jumbotron" style="background-color: rgba(63, 6, 64, 0.8)">
+    <div class="row">
+
+    </div>
+
+        {% for comentario in lista_comentarios %}
+
+            {% if (current_user.admin == 1) or (comentario.usuario.usuarioId == current_user.usuarioId) %}
+
+                {{ comments_admin(comentario) }}
+
+            {% else %}
+
+                {{ comments(comentario) }}
+
+            {% endif %}
+
+        {% endfor %}
+
+
+
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+</div> <!-- container fluid -->
+
+
+
+{% endblock %}
+
+

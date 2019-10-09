@@ -1,0 +1,106 @@
+{% extends 'cabecerapie.html' %}
+{% from "Macros_form.html" import mostrar_campo,mostrar_campo_radio, mostrar_campo_submit %}
+{% block contenido %}
+
+<h1 class="display-4" style="margin-top: 45px"> <p class="text-center"> {{titulo}} </p></h1>
+
+
+{% block flash%}
+
+{{ super() }}
+
+{% endblock %}
+
+<div class="jumbotron jumbotron-fluid" style="background-color: rgba(63, 6, 64, 0.8) ; color: white">
+        <div class="container-fluid">
+
+
+                {% if(destino=="actualizar")%}
+                <form method="POST" action="{{ url_for('actualizar', id = evento["eventoId"]) }}" enctype="multipart/form-data">
+                {% else %}
+                <form method="POST" action="{{ url_for('crearevento')}}" enctype="multipart/form-data">
+                {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+
+                    <div class="row">
+                    <div class="col-md-12">
+                    {{ mostrar_campo(formulario.nombreevento, class='form-control' )}}
+                    <br>
+                    </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ mostrar_campo(formulario.fechaevento, class='form-control' )}}
+                            <br>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            {{ mostrar_campo(formulario.hora, class='form-control' )}}
+                            <br>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ mostrar_campo(formulario.opciones , class='form-control')}}
+                            <br>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            {% if(destino=="crearevento") %}
+                            {{ mostrar_campo(formulario.imagen , class='form-control-file')}}
+
+	      	                {% endif %}
+	      	                {% if(destino=="actualizar") %}
+	                        <img style="width:450px;margin-left:20px;" src="{{url_for('static', filename='images/'+formulario.imagen.data)}}" >
+	      	                {% endif %}
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+
+                    {{ mostrar_campo(formulario.lugarevento , class='form-control')}}
+                    <br>
+                    {{ mostrar_campo(formulario.descripcion , class='form-control')}}
+                    <br>
+                    <br>
+
+                    {% if(destino=="crearevento") %}
+                    {{ mostrar_campo_submit(formulario.submit , class='btn btn-crear')}}
+
+                    {% endif %}
+                    {% if(destino=="actualizar") %}
+                    {{ mostrar_campo_submit(formulario.actualizar , class='btn btn-crear')}}
+                    <p style="color:darkgrey "> Un administrador debera aprobar la actualizacion antes de que se muestre en la pagina </p>
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+</div>
+</form>
+
+
+{% endblock %}

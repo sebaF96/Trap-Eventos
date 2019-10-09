@@ -1,0 +1,192 @@
+{% extends 'cabecerapie.html' %}
+{% from "Macros_form.html" import mostrar_campo,mostrar_campo_radio, mostrar_campo_submit %}
+{% block contenido %}
+
+
+<h1 class="display-4" style="margin-top: 45px"> <p class="text-center"> {{titulo}} </p></h1>
+
+{% block flash%}
+
+{{ super() }}
+
+{% endblock %}
+
+
+<div class="container-fluid">
+
+<div class="row">
+
+    <div class="col-md-7">
+
+<div class="jumbotron jumbotron-fluid" style="background-color: rgba(63, 6, 64, 0.8) ; color: white; border-radius: 50px">
+
+<h1 style="text-align: center; color: orangered ">
+    <img src="{{url_for('static', filename = 'images/partypoker.png')}}" width="40" height="40" class="d-inline-block align-left" alt="">
+    Crear cuenta
+<img src="{{url_for('static', filename = 'images/partypoker.png')}}" width="40" height="40" class="d-inline-block align-left" alt="">
+</h1>
+    <hr>
+
+
+        <form method="POST" action="{{ url_for("ingresar") }}" enctype="multipart/form-data" >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+        <div class="row">
+
+            <div class="col-md-5 form-group" style="margin-left: 20px">
+
+                {{ mostrar_campo(formulario.nombre, class='form-control' )}}
+
+            </div>
+            <div class="col-md-1"></div>
+
+
+            <div class="col-md-5">
+
+               {{ mostrar_campo(formulario.apellido, class='form-control' )}}
+
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-5" style="margin-left: 20px">
+
+
+                {{ mostrar_campo(formulario.email, class='form-control' )}}
+
+            </div>
+
+
+        <div class="col-md-1"></div>
+
+
+
+
+            <div class="col-md-5">
+
+                {{ mostrar_campo(formulario.contrasenia, class='form-control' )}}
+
+            </div>
+            <div class="col-md-1"></div>
+
+        </div>
+
+    <br/>
+
+        <div class="row">
+            <div class="col-md-5" style="margin-left: 20px">
+
+            {{ mostrar_campo(formulario.repetir, class='form-control' )}}
+
+
+            </div>
+            <div class=col-md-1></div>
+
+            <div class="col-md-5">
+
+
+            </div>
+
+        </div>
+
+
+<br/>
+<hr>
+<br/>
+
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" style="text-align: center">
+              {{ mostrar_campo_submit(formulario.submit1 , class='btn btn-crear')}}
+                </form>
+
+        </div>
+        <div class="col-md-2"></div>
+        </div>
+
+
+            </div>
+
+
+</div>
+
+
+
+    <div class="col-md-5">
+
+        <div class="jumbotron jumbotron-fluid" style="background-color: black ; color: white; border-radius: 50px">
+
+        <h1 style="text-align: center; color: orangered ">
+            <img src="{{url_for('static', filename = 'images/partypoker.png')}}" width="40" height="40" class="d-inline-block align-left" alt="">
+            Iniciar sesion
+            <img src="{{url_for('static', filename = 'images/partypoker.png')}}" width="40" height="40" class="d-inline-block align-left" alt="">
+        </h1>
+        <hr>
+
+            <form method="POST" action="{{ url_for("ingresar") }}" enctype="multipart/form-data" >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" style="margin-left: 50px; margin-right: 50px">
+
+                 {{ mostrar_campo(login.emailLogin, class='form-control' )}}
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+
+            <br/>
+
+             <div class="row">
+
+                <div class="col-md-10" style="margin-left: 50px; margin-right: 50px">
+
+                 {{ mostrar_campo(login.contraseniaLogin, class='form-control' )}}
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    {{ mostrar_campo_submit(login.submit2, class='btn btn-crear')}}
+
+                    </div>
+                <div class="col-md-1">
+
+                </div>
+
+            </div>
+
+             <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8" style="text-align: center">
+
+                    <br>
+                    <a href="#" style="color: orangered">Olvidaste tu contraseña?</a>
+                    </div>
+                <div class="col-md-2">
+
+                </div>
+
+            </div>
+
+
+
+
+            </form>
+
+
+
+
+        </div>
+
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}

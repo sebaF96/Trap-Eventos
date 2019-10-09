@@ -1,0 +1,32 @@
+{% macro mostrar_error(campo) %}
+	{% if campo.errors %}
+	  <div class="alert alert-danger" role="alert">
+	  {% for error in campo.errors %}
+	   	{{ error }}<br>
+	  {% endfor %}
+	  </div>
+	{% endif %}
+{% endmacro %}
+
+
+{% macro mostrar_campo(campo) %}
+	{{ campo.label }}
+	{{ campo(**kwargs)|safe }}
+	{{mostrar_error(campo)}}
+{% endmacro %}
+
+
+{% macro mostrar_campo_radio(campo) %}
+	{{ campo.label }}
+	<br/>
+	{% for subfield in campo %}
+			{{ subfield }}
+	  		{{ subfield.label }}
+	{% endfor %}
+	{{mostrar_error(campo)}}
+{% endmacro %}
+
+
+{% macro mostrar_campo_submit(campo) %}
+	{{ campo(**kwargs)|safe }}
+{% endmacro %}

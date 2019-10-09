@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{url_for('static', filename = 'css/open-iconic/font/css/open-iconic-bootstrap.css')}}"> rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+        <link rel="icon" href="{{url_for('static', filename = 'images/partypoker.png')}}">
+        <link rel="stylesheet" href={{url_for('static', filename = 'css/style.css')}}>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+        {%block estilos%}
+
+        {% endblock %}
+
+
+    <title> {{titulo}} </title>
+</head>
+
+<body background="{{url_for('static', filename = 'images/background.jpg')}}">
+
+
+
+{% if current_user.is_authenticated %}
+
+
+
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index')}}" style="color: orangered; font-size: 28px">
+            <img src="{{url_for('static', filename = 'images/partypoker.png')}}" width="40" height="40" class="d-inline-block align-left" alt="">
+            Trap Eventos
+        </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#BarraLogueado" aria-controls="BarraLogueado" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="BarraLogueado">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('index')}}" id="banner1">Menu<span class="sr-only">(actual)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('miseventos')}}" id="banner2"> Mis eventos</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('crearevento')}}" id="banner3">Nuevo evento</a>
+            </li>
+
+        {% if current_user.admin == 1 %}
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url_for('aprobareventos')}}" id="banner5">Eventos pendientes</a>
+
+            </li>
+
+        {% endif %}
+
+        </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <ul class="nav navbar-nav navbar-right">
+
+          <li>
+            {% if current_user.admin == 1 %}
+        <a class="nav-link" style="font-size: 18px">
+
+             {{ current_user }}
+
+             <img src="{{url_for('static', filename = 'images/correct.svg')}}" width="20" height="20" class="d-inline-block align-left" alt="Administrador">
+
+            </a>
+            {% else %}
+            <a class="nav-link" style="font-size: 18px">
+
+               {{ current_user }}
+            </a>
+            {% endif %}
+        </li>
+
+
+      </ul>
+        <a href="{{ url_for('logout') }}" class="btn-primario" style="font-size: 17px; text-decoration: none">LOGOUT</a>
+        </form>
+    </div>
+    </nav>
+<br>
+
+{% else %}
+
+
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index')}}" style="color: orangered; font-size: 28px">
+           <img src="{{url_for('static', filename = 'images/partypoker.png')}}" width="40" height="40" class="d-inline-block align-left" alt="">
+        Trap Eventos
+        </a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+
+
+
+        <a class="btn btn-primario" href="{{ url_for('ingresar')}}" style="font-size: 17px; text-decoration: none">LOGIN</a> &nbsp;&nbsp;
+
+
+
+    </nav>
+    <br>
+
+
+
+{% endif %}
+
+
+
+{%block contenido%}
+
+{% block flash %}
+
+<div class="container" style="text-align: center; font-size:large">
+   <div class="row">
+     <div class="col-md-12">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endfor %}
+         {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{{ super() }}
+
+{%endblock%}
+
+
+
+
+
+
+
+
+
+<footer class="page-footer font-small  pt-4" style="margin-top: 30px">
+
+
+    <div class="container">
+
+
+      <div class="row">
+
+
+        <div class="col-lg-6 mb-6">
+
+            <div class="row">
+                <div class="col-md-12">
+
+        	<h1 style="color: orangered; font-size: 65px"> Trap Eventos </h1>
+                </div>
+            </div>
+
+            <div class="row">
+          <!-- Form -->
+
+                <div class="col-md-1 sm-1" style="margin-right: 21px; margin-left: 6px">
+                    <a href="http://www.facebook.com/sebba.ff" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/facebook.svg')}}" width="40" height="40" class="d-inline-block align-left" alt="">  </a>
+                </div>
+                <div class="col-md-1 sm-1" style="margin-right: 21px">
+                    <a href="http://www.twitter.com/ff_seba" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/twitter.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
+                </div>
+                <div class="col-md-1 sm-1" style="margin-right: 21px">
+                    <a href="http://www.instagram.com/fernandez.seba" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/instagram.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
+                </div>
+                <div class="col-md-1 sm-1" style="margin-right: 21px">
+                    <a href="http://www.gitlab.com" style="text-decoration: none"> <img src="{{url_for('static', filename = 'images/gitlab.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
+                </div>
+                <div class="col-md-1 sm-1" style="margin-right: 21px">
+                    <a href="http://www.youtube.com/pokerstars" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/youtube.svg')}}" width="40" height="40" class="d-inline-block align-left" alt="">  </a>
+                </div>
+                <div class="col-md-1 sm-1">
+                    <a href="http://www.twitch.tv/arteezy" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/twitch.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
+                </div>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="col-lg-6 mb-6">
+			<br>
+
+                <p style="color: white"> © Copyright 2019-2020. The Trap Eventos™ mark is owned by Sebastian Fernandez Cianci, Corporation.</p>
+
+
+            </div>
+
+        </div>
+
+
+      </div>
+
+
+  </footer>
+
+
+
+
+
+
+
+
+</body>
+</html>

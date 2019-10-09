@@ -1,0 +1,51 @@
+{% extends 'cabecerapie.html' %}
+{% block contenido %}
+{% from "Macros.html" import eventos_pendientes %}
+
+<h1 class="display-4" style="margin-top: 45px"> <p class="text-center"> Eventos pendientes </p></h1>
+
+<div class="container-fluid">
+
+
+<div class="table-responsive">
+<table class="table table-hover table-dark">
+  <thead style="color: orangered">
+    <tr>
+      <th scope="col">Nombre / titulo</th>
+      <th scope="col">Fecha y Hora</th>
+      <th scope="col">Lugar</th>
+      <th scope="col">Categoria</th> 
+      <th scope="col" style="text-align: center">Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    {% for evento in lista_eventos %}
+
+    {{ eventos_pendientes(evento)}}
+
+
+
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+  </tbody>
+</table>
+</div>
+
+
+
+</div>
+
+
+
+
+{% endblock %}
