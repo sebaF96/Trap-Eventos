@@ -1,0 +1,9 @@
+/bin
+/include
+/lib
+/lib64
+/share
+/__pycache__
+pyvenv.cfg
+.env
+.idea/
