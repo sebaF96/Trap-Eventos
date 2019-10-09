@@ -7,3 +7,6 @@
 pyvenv.cfg
 .env
 .idea/
+/static/css/open-iconic/svg
+/static/css/open-iconic/png
+
