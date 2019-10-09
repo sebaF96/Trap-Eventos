@@ -12,17 +12,10 @@ from run import db, login_manager
 from mail import enviarMail
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
 
-logueado = False  # Igualar a True para poder comentar eventos y crear eventos. Cambiar a False para registrarnos
-admin = False  # Mantener esta variable a True para poder aprobar/eliminar/modificar eventos. Y eliminar comentarios.
-
-if logueado is False:
-    admin = False
-
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
     flash('Debe iniciar sesión para continuar.', 'warning')
-    #  Redireccionar a la página que contiene el formulario de login
     return redirect(url_for('ingresar'))
 
 
