@@ -9,4 +9,5 @@ pyvenv.cfg
 .idea/
 /static/css/open-iconic/svg
 /static/css/open-iconic/png
+/static/css/open-iconic/font
 
