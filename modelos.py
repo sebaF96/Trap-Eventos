@@ -73,9 +73,9 @@ class Usuario(UserMixin, db.Model):
             aux = True
         return aux
 
-    def is_owner(self, id):     # Comprueba si el usuario es dueño, puede usarse con comentarios o eventos.
+    def is_owner(self, event_or_coment):  # Comprueba si el usuario es dueño, puede usarse con comentarios o eventos.
         aux = False
-        if self.usuarioId == id:
+        if self.usuarioId == event_or_coment.usuarioId:
             aux = True
         return aux
 
@@ -98,5 +98,6 @@ class Comentario(db.Model):
 
 
 @login_manager.user_loader
-def load_user(usuarioId):
-    return db.session.query(Usuario).filter(Usuario.usuarioId == usuarioId).first()
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
+

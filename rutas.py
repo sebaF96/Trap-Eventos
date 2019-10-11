@@ -115,39 +115,42 @@ def crearevento():
 def actualizar(id):
     titulo = "Editar evento"
     evento = get_evento(id)
+    if current_user.is_owner(evento) or current_user.is_admin():
 
-    class Evento:
-        nombreevento = evento.nombre
-        fechaevento = evento.fecha
-        hora = evento.hora
-        lugarevento = evento.lugar
-        imagen = evento.imagen
-        descripcion = evento.descripcion
-        opciones = evento.tipo
+        class Evento:
+            nombreevento = evento.nombre
+            fechaevento = evento.fecha
+            hora = evento.hora
+            lugarevento = evento.lugar
+            imagen = evento.imagen
+            descripcion = evento.descripcion
+            opciones = evento.tipo
 
-    formulario = CrearEvento(obj=Evento)
+        formulario = CrearEvento(obj=Evento)
 
-    CrearEvento.opcional(formulario.imagen)
+        CrearEvento.opcional(formulario.imagen)
 
-    if formulario.validate_on_submit():
-        flash('Evento actualizado con exito! (La actualizacion debera ser aprobada por un administrador antes'
-              ' de ser mostrada en la pagina)', 'success')
-        formulario.mostrar_datos()
+        if formulario.validate_on_submit():
+            flash('Evento actualizado con exito! (La actualizacion debera ser aprobada por un administrador antes'
+                  ' de ser mostrada en la pagina)', 'success')
+            formulario.mostrar_datos()
 
-        evento.nombre = formulario.nombreevento.data
-        evento.fecha = formulario.fechaevento.data
-        evento.hora = formulario.hora.data
-        evento.lugar = formulario.lugarevento.data
-        evento.descripcion = formulario.descripcion.data
-        evento.tipo = formulario.opciones.data
-        evento.aprobado = 0
+            evento.nombre = formulario.nombreevento.data
+            evento.fecha = formulario.fechaevento.data
+            evento.hora = formulario.hora.data
+            evento.lugar = formulario.lugarevento.data
+            evento.descripcion = formulario.descripcion.data
+            evento.tipo = formulario.opciones.data
+            evento.aprobado = 0
 
-        db.session.commit()
+            db.session.commit()
 
-        return redirect(url_for('miseventos'))
+            return redirect(url_for('miseventos'))
 
-    return render_template('crear_evento.html', titulo=titulo, formulario=formulario, destino="actualizar", id=id,
-                           evento=evento)
+        return render_template('crear_evento.html', titulo=titulo, formulario=formulario, destino="actualizar", id=id,
+                               evento=evento)
+    else:
+        return redirect(url_for('index'))
 
 
 @app.route('/aprobar-eventos')
@@ -185,7 +188,7 @@ def aprobarEventoById(id):
 @login_required
 def eliminarEventoById(id):
     evento = get_evento(id)
-    if current_user.is_admin() or current_user.is_owner(evento.usuarioId):
+    if current_user.is_admin() or current_user.is_owner(evento):
         db.session.delete(evento)
         db.session.commit()
         return redirect(url_for('aprobareventos'))
@@ -199,9 +202,10 @@ def eliminarEventoById(id):
 def eliminarComentarioById(id):
 
     comentario = get_comentario(id)
-    if current_user.is_admin() or current_user.is_owner(comentario.usuarioId):
+    if current_user.is_admin() or current_user.is_owner(comentario):
         db.session.delete(comentario)
         db.session.commit()
+        flash('Comentario eliminado!', 'success')
         return redirect(url_for('vistaevento', id=comentario.eventoId))
     else:
         flash('Usted no tiene permiso para realizar esta accion', 'warning')
