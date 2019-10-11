@@ -256,7 +256,7 @@ def ingresar():
             return redirect(url_for('index'))
         else:
             # Mostrar error de autenticación
-            flash('Email o pass incorrectas.', 'danger')
+            flash('Fallo autenticacion, reintente.', 'danger')
 
     if not current_user.is_authenticated:
         return render_template('registro.html', titulo=titulo, formulario=formulario, login=login)
