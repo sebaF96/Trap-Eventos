@@ -19,6 +19,14 @@ def unauthorized_callback():
     return redirect(url_for('ingresar'))
 
 
+def has_permission(user, evento):
+    aux = False
+    if user.is_authenticated:
+        if user.is_admin() or user.is_owner(evento):
+            aux = True
+    return aux
+
+
 @app.route('/',  methods=["POST", "GET"])
 @app.route('/<int:pag>', methods=["POST", "GET"])
 def index(pag=1):
@@ -60,7 +68,8 @@ def miseventos():
 @app.route('/ver-evento/<id>', methods=["POST", "GET"])
 def vistaevento(id):
     evento = get_evento(id)
-    if evento.aprobado == 1 or current_user.is_admin():
+
+    if evento.aprobado == 1 or has_permission(current_user, evento):
         formulario = AgregarComentario()
         titulo = "Evento - " + evento.nombre
         lista_comentarios = listar_comentarios(id)
@@ -117,7 +126,7 @@ def crearevento():
 def actualizar(id):
     titulo = "Editar evento"
     evento = get_evento(id)
-    if current_user.is_owner(evento) or current_user.is_admin():
+    if has_permission(current_user, evento):
 
         class Evento:
             nombreevento = evento.nombre
