@@ -156,7 +156,7 @@ def aprobareventos():
     lista_eventos = listar_eventos_pendientes()
     titulo = "Eventos pendientes"
 
-    if current_user.admin == 1:
+    if current_user.is_admin():
         return render_template('aprobar_eventos.html', titulo=titulo, lista_eventos=lista_eventos)
 
     else:
@@ -167,7 +167,7 @@ def aprobareventos():
 @login_required
 def aprobarEventoById(id):
 
-    if current_user.admin == 1:
+    if current_user.is_admin():
 
         evento = get_evento(id)
         evento.aprobado = 1
@@ -177,6 +177,7 @@ def aprobarEventoById(id):
 
         return redirect(url_for('aprobareventos'))
     else:
+        flash('Usted no tiene permiso para realizar esta accion', 'warning')
         return redirect(url_for('index'))
 
 
@@ -184,18 +185,27 @@ def aprobarEventoById(id):
 @login_required
 def eliminarEventoById(id):
     evento = get_evento(id)
-    db.session.delete(evento)
-    db.session.commit()
-    return redirect(url_for('aprobareventos'))
+    if current_user.is_admin() or current_user.is_owner(evento.usuarioId):
+        db.session.delete(evento)
+        db.session.commit()
+        return redirect(url_for('aprobareventos'))
+    else:
+        flash('Usted no tiene permiso para realizar esta accion', 'warning')
+        return redirect(url_for('index'))
 
 
 @app.route('/eliminarComentarioById/<int:id>')
 @login_required
 def eliminarComentarioById(id):
+
     comentario = get_comentario(id)
-    db.session.delete(comentario)
-    db.session.commit()
-    return redirect(url_for('vistaevento', id=comentario.eventoId))
+    if current_user.is_admin() or current_user.is_owner(comentario.usuarioId):
+        db.session.delete(comentario)
+        db.session.commit()
+        return redirect(url_for('vistaevento', id=comentario.eventoId))
+    else:
+        flash('Usted no tiene permiso para realizar esta accion', 'warning')
+        return redirect(url_for('index'))
 
 
 @app.route('/ingresar', methods=["POST", "GET"])

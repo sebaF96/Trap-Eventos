@@ -67,6 +67,18 @@ class Usuario(UserMixin, db.Model):
     def __repr__(self):
         return str(self.nombre) + ' ' + str(self.apellido)
 
+    def is_admin(self):         # Comprueba si el usuario es administrador
+        aux = False
+        if self.admin == 1:
+            aux = True
+        return aux
+
+    def is_owner(self, id):     # Comprueba si el usuario es dueño, puede usarse con comentarios o eventos.
+        aux = False
+        if self.usuarioId == id:
+            aux = True
+        return aux
+
 
 class Comentario(db.Model):
 

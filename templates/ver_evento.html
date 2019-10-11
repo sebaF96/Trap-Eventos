@@ -61,7 +61,7 @@
 
     </div>
 
-    {% if admin is sameas true %}
+    {% if current_user.is_admin() or current_user.is_owner(evento.usuarioId) %}
 
 
     <div class="row">
@@ -166,7 +166,7 @@
 
         {% for comentario in lista_comentarios %}
 
-            {% if (current_user.admin == 1) or (comentario.usuario.usuarioId == current_user.usuarioId) %}
+            {% if (current_user.is_admin()) or (current_user.is_owner(comentario.usuarioId)) %}
 
                 {{ comments_admin(comentario) }}
 
