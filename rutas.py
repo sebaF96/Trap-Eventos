@@ -59,28 +59,30 @@ def miseventos():
 
 @app.route('/ver-evento/<id>', methods=["POST", "GET"])
 def vistaevento(id):
-
-    formulario = AgregarComentario()
     evento = get_evento(id)
-    titulo = "Evento - " + evento.nombre
-    lista_comentarios = listar_comentarios(id)
+    if evento.aprobado == 1 or current_user.is_admin():
+        formulario = AgregarComentario()
+        titulo = "Evento - " + evento.nombre
+        lista_comentarios = listar_comentarios(id)
 
-    if formulario.is_submitted():
-        if formulario.validate_on_submit():
-            flash('Comentario añadido!', 'success')
-            formulario.mostrar_datos()
+        if formulario.is_submitted():
+            if formulario.validate_on_submit():
+                flash('Comentario añadido!', 'success')
+                formulario.mostrar_datos()
 
-            comentario = Comentario(contenido=formulario.contenido.data, usuarioId=current_user.usuarioId,
-                                    eventoId=id)
-            db.session.add(comentario)
-            db.session.commit()
+                comentario = Comentario(contenido=formulario.contenido.data, usuarioId=current_user.usuarioId,
+                                        eventoId=id)
+                db.session.add(comentario)
+                db.session.commit()
 
-            return redirect(url_for('vistaevento', id=id))
-        else:
-            flash('Comentario no añadido. Reintente', 'danger')
+                return redirect(url_for('vistaevento', id=id))
+            else:
+                flash('Comentario no añadido. Reintente', 'danger')
 
-    return render_template('ver_evento.html', id=id, evento=evento, titulo=titulo,
-                           formulario=formulario, lista_comentarios=lista_comentarios)
+        return render_template('ver_evento.html', id=id, evento=evento, titulo=titulo,
+                               formulario=formulario, lista_comentarios=lista_comentarios)
+    else:
+        return redirect(url_for('index'))
 
 
 @app.route('/crear-evento', methods=["POST", "GET"])
