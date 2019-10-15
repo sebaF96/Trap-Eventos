@@ -6,7 +6,7 @@
 
 
 
-<h1 class="display-4" style="margin-top: 45px"> {{evento["nombre"]}} </h1>
+<h1 class="display-4" style="margin-top: 45px"> {{ evento.nombre }} </h1>
 
 {% block flash%}
 
@@ -28,7 +28,7 @@
         <div class="col-md-7" id="evento_titulo">
 
 
-            <p>creado por {{evento["usuario"]}} </p>
+            <p>creado por {{ evento.usuario }} </p>
 
             <div class="row">
                         <div class="col-md-3">
@@ -69,7 +69,7 @@
     <div class="row">
             <div class="col-md-8"></div>
             <div class="col-md-2" style="text-align: left">
-                <a href="{{ url_for('actualizar', id = evento["eventoId"]) }}" class="btn btn btn-secundario btn-lg">
+                <a href="{{ url_for('actualizar', id = evento.eventoId) }}" class="btn btn btn-secundario btn-lg">
                     Editar evento
                     <span class="oi oi-pencil"></span>
                 </a>
@@ -77,7 +77,7 @@
 
 
             <div class="col-md-2" style="text-align: right">
-                <a href="{{ url_for('eliminarEventoById', id = evento["eventoId"]) }}" class="btn btn-secundario btn-lg">
+                <a href="{{ url_for('eliminarEventoById', id = evento.eventoId) }}" class="btn btn-secundario btn-lg">
                     Eliminar
                     <span class="oi oi-trash"></span>
                 </a>
@@ -130,7 +130,7 @@
 
             <div class="modal-dialog modal-dialog-centered modalcoment1" role="document">
 
-                <form method="POST" action="{{ url_for('vistaevento', id=evento["eventoId"]) }}"  enctype="multipart/form-data" >
+                <form method="POST" action="{{ url_for('vistaevento', id=evento.eventoId) }}"  enctype="multipart/form-data" >
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
             <div class="modal-content modalcoment2">
@@ -157,7 +157,6 @@
         </div>
 
 
-    </div>
     </div>
 
 
@@ -192,16 +191,7 @@
 
 
     </div>
-    </div>
 
-
-
-
-
-
-
-
-</div> <!-- container fluid -->
 
 
 

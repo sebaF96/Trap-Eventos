@@ -5,9 +5,9 @@
 <div class="card" style="height: 700px">
             <img  style="height: 253px; width: 393px" src="{{url_for('static', filename = 'images/'+evento.imagen )}}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title"> <a style="color: orangered; text-decoration: none" href={{url_for('vistaevento', id = evento["eventoId"])}}> {{evento["nombre"]}} </a><span class="badge badge-secondary"><span class="oi oi-tag" aria-hidden="true"></span> {{evento["tipo"]}}</span></h5>
+                <h5 class="card-title"> <a style="color: orangered; text-decoration: none" href={{url_for('vistaevento', id = evento.eventoId)}}> {{ evento.nombre }} </a><span class="badge badge-secondary"><span class="oi oi-tag" aria-hidden="true"></span> {{ evento.tipo }}</span></h5>
                 <div style="height: 100px; overflow: hidden">
-                <p class="card-text"> {{evento["descripcion"]}} </p>
+                <p class="card-text"> {{ evento.descripcion }} </p>
                 </div>
             </div>
 

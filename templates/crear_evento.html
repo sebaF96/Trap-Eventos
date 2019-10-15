@@ -16,7 +16,7 @@
 
 
                 {% if(destino=="actualizar")%}
-                <form method="POST" action="{{ url_for('actualizar', id = evento["eventoId"]) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url_for('actualizar', id = evento.eventoId) }}" enctype="multipart/form-data">
                 {% else %}
                 <form method="POST" action="{{ url_for('crearevento')}}" enctype="multipart/form-data">
                 {% endif %}
@@ -66,7 +66,7 @@
 
 	      	                {% endif %}
 	      	                {% if(destino=="actualizar") %}
-	                        <img style="width:450px;margin-left:20px;" src="{{url_for('static', filename='images/'+formulario.imagen.data)}}" >
+	                        <img style="width:450px;margin-left:20px;" src="{{url_for('static', filename='images/'+formulario.imagen.data)}}" alt="">
 	      	                {% endif %}
 
 
