@@ -15,9 +15,9 @@
 <h1 style="color: black">Evento aprobado! <img src="https://partypokerrakeback.org/wp-content/uploads/2018/09/cropped-partypoker-diamond.png" class="img-fluid rounded"
                      alt="Responsive image" style="width: 45px; height: 45px"> </h1>
 
-<b style="color: orangered"> {{evento["nombre"]}} </b>
+<b style="color: orangered"> {{ evento.nombre }} </b>
 
-<p style="color: black"> Tu evento {{evento["nombre"]}} que se llevara a cabo el dia {{evento["fecha"]}}  ha sido recientemente aprobado en nuestra pagina y ya se encuentra disponible
+<p style="color: black"> Tu evento {{ evento.nombre }} que se llevara a cabo el dia {{ evento.fecha.strftime("%d %B %Y") }}  ha sido recientemente aprobado en nuestra pagina y ya se encuentra disponible
 
     para que lo compartas!
 
