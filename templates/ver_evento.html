@@ -21,7 +21,7 @@
     <div class="row">
 
         <div class="col-md-5">
-            <img src="{{url_for('static', filename = 'images/'+evento["imagen"] )}}" class="card-img-top" alt="...">
+            <img src="{{url_for('static', filename = 'images/'+evento.imagen )}}" class="card-img-top" alt="...">
 
         </div>
 
@@ -31,28 +31,28 @@
             <p>creado por {{evento["usuario"]}} </p>
 
             <div class="row">
-                        <div class="col-md-2">
-                            <h4> <span class="badge badge-dark"> <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span> Fecha</span> </h4> {{evento["fecha"]}}
+                        <div class="col-md-3">
+                            <h4> <span class="badge badge-dark"> <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span> Fecha</span> </h4> {{ evento.fecha.strftime("%d %B, %Y") }}
                         </div>
 
                          <div class="col-md-2">
-                             <h4> <span class="badge badge-dark"> <span class="oi oi-clock" title="clock" aria-hidden="true"></span> Hora</span>  </h4> {{evento["hora"]}}
+                             <h4> <span class="badge badge-dark"> <span class="oi oi-clock" title="clock" aria-hidden="true"></span> Hora</span>  </h4> {{ evento.hora.strftime("%H:%M") }}
                          </div>
 
-                        <div class="col-md-5">
-                            <h4> <span class="badge badge-dark"> <span class="oi oi-map-marker" title="place" aria-hidden="true"></span> Lugar</span> </h4> {{evento["lugar"]}}
+                        <div class="col-md-4">
+                            <h4> <span class="badge badge-dark"> <span class="oi oi-map-marker" title="place" aria-hidden="true"></span> Lugar</span> </h4> {{ evento.lugar }}
                         </div>
 
                         <div class="col-md-3">
 
-                            <h4> <span class="badge badge-dark"> <span class="oi oi-tag" aria-hidden="true"></span> Categoria </span> </h4> {{evento["tipo"]}}
+                            <h4> <span class="badge badge-dark"> <span class="oi oi-tag" aria-hidden="true"></span> Categoria </span> </h4> {{ evento.tipo }}
 
                         </div>
             </div>
             <hr>
             <div class="row">
                 <p>
-                    {{evento["descripcion"]}}
+                    {{ evento.descripcion }}
                 </p>
             </div>
 

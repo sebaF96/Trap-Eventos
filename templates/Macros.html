@@ -3,7 +3,7 @@
 <div class="col-md-4">
 
 <div class="card" style="height: 700px">
-            <img  style="height: 253px; width: 393px%" src="{{url_for('static', filename = 'images/'+evento["imagen"] )}}" class="card-img-top" alt="...">
+            <img  style="height: 253px; width: 393px" src="{{url_for('static', filename = 'images/'+evento.imagen )}}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"> <a style="color: orangered; text-decoration: none" href={{url_for('vistaevento', id = evento["eventoId"])}}> {{evento["nombre"]}} </a><span class="badge badge-secondary"><span class="oi oi-tag" aria-hidden="true"></span> {{evento["tipo"]}}</span></h5>
                 <div style="height: 100px; overflow: hidden">
@@ -17,12 +17,12 @@
             <div class="card-footer">
                 <ul class="list-group list-group-flush">
 
-                        <li class="list-group-item"> <span class="badge badge-info"> <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span> Fecha</span> {{evento["fecha"]}}</li>
-                        <li class="list-group-item"> <span class="badge badge-success"> <span class="oi oi-clock" title="clock" aria-hidden="true"></span> Hora</span> {{evento["hora"]}} </li>
-                        <li class="list-group-item"> <span class="badge badge-secondary"> <span class="oi oi-map-marker" title="place" aria-hidden="true"></span> Lugar</span> {{evento["lugar"]}}</li>
+                        <li class="list-group-item"> <span class="badge badge-info"> <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span> Fecha</span> {{ evento.fecha.strftime("%d %B, %Y") }}</li>
+                        <li class="list-group-item"> <span class="badge badge-success"> <span class="oi oi-clock" title="clock" aria-hidden="true"></span> Hora</span> {{ evento.hora.strftime("%H:%M") }} </li>
+                        <li class="list-group-item"> <span class="badge badge-secondary"> <span class="oi oi-map-marker" title="place" aria-hidden="true"></span> Lugar</span> {{ evento.lugar }}</li>
 
                  </ul>
-                <a href="{{ url_for('vistaevento', id = evento["eventoId"]) }}" class="btn btn-primario">Ver mas</a>
+                <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" class="btn btn-primario">Ver mas</a>
             </div>
     </div>
 
@@ -43,13 +43,13 @@
 
 <tr>
 
-      <th scope="row"> <a href="{{ url_for('vistaevento', id = evento["eventoId"]) }}" class="evento-tabla"> {{evento["nombre"]}} </a></th>
-      <td style="width: 180px">{{evento["fecha"]}} | {{evento["hora"]}}</td>
-      <td>{{evento["lugar"]}}</td>
+      <th scope="row"> <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" class="evento-tabla"> {{ evento.nombre }} </a></th>
+      <td style="width: 180px">{{ evento.fecha.strftime("%d %b %Y")}} | {{evento.hora.strftime("%H:%M") }}</td>
+      <td>{{ evento.lugar }}</td>
 
 
 
-        {% if evento["aprobado"] == 1 %}
+        {% if evento.aprobado == 1 %}
 
             <td class="estado-aprobado"> Aprobado </td>
 
@@ -60,9 +60,9 @@
 
 
       <td style="width: 350px">
-          <a href="{{ url_for('vistaevento', id = evento["eventoId"]) }}"><button type="button" class="btn btn-primario">Ver <span class="oi oi-eye"></span></button></a>
-          <a href="{{url_for('actualizar', id = evento["eventoId"] )}}"><button type="button" class="btn btn-primario">Editar <span class="oi oi-pencil"></span></button></a>
-          <a href="{{url_for('eliminarEventoById', id = evento["eventoId"] )}}"><button type="button" class="btn btn-danger">Eliminar <span class="oi oi-trash"></span></button></a>
+          <a href="{{ url_for('vistaevento', id = evento.eventoId) }}"><button type="button" class="btn btn-primario">Ver <span class="oi oi-eye"></span></button></a>
+          <a href="{{url_for('actualizar', id = evento.eventoId) }}"><button type="button" class="btn btn-primario">Editar <span class="oi oi-pencil"></span></button></a>
+          <a href="{{url_for('eliminarEventoById', id = evento.eventoId )}}"><button type="button" class="btn btn-danger">Eliminar <span class="oi oi-trash"></span></button></a>
 
       </td>
 </tr>
@@ -86,18 +86,18 @@
 {% macro eventos_pendientes(evento) %}
 
  <tr>
-        <th scope="row" style="width: 390px"> <a href="{{ url_for('vistaevento', id = evento["eventoId"]) }}" class="evento-tabla"> {{evento["nombre"]}} </a></th>
-            <td style="width: 180px">{{evento["fecha"]}} | {{evento["hora"]}}</td>
-            <td>{{evento["lugar"]}}</td>
+        <th scope="row" style="width: 390px"> <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" class="evento-tabla"> {{ evento.nombre }} </a></th>
+            <td style="width: 180px">{{ evento.fecha.strftime("%d %b %Y") }} | {{ evento.hora.strftime("%H:%M") }}</td>
+            <td>{{ evento.lugar }}</td>
 
-	    <td>{{evento["tipo"]}}</td>
+	    <td>{{ evento.tipo }}</td>
      
 
             <td style="width: 280px">
 
-                <a href="{{ url_for('vistaevento', id = evento["eventoId"]) }}" target="_blank"><button type="" class="btn btn-secondary"> Ver </button></a>
-                <a href="{{url_for('aprobarEventoById', id = evento["eventoId"]) }}"><button type="button" class="btn btn-success">Aprobar </button></a>
-                <a href="{{url_for('eliminarEventoById', id = evento["eventoId"]) }}"><button type="button" class="btn btn-danger">Rechazar </button></a>
+                <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" target="_blank"><button type="button" class="btn btn-secondary"> Ver </button></a>
+                <a href="{{url_for('aprobarEventoById', id = evento.eventoId) }}"><button type="button" class="btn btn-success">Aprobar </button></a>
+                <a href="{{url_for('eliminarEventoById', id = evento.eventoId) }}"><button type="button" class="btn btn-danger">Rechazar </button></a>
 
             </td>
  </tr>
@@ -128,7 +128,7 @@
             {% endif %}
 
 
-            <h9 style="color: Gray"> {{comentario["fechahora"]}}</h9>
+            <p style="color: Gray"> {{comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
             <p>{{comentario["contenido"]}}</p>
 
         <br>
@@ -140,7 +140,7 @@
 {% if (comentario["usuarioId"] == 220) or (comentario.evento["usuarioId"] == 220 ) %}
 
         <br>
-        <a href="{{url_for('eliminarComentarioById', id = comentario["comentarioId"])}}"> <button class="btn-secundario"><span class="oi oi-trash"></span> Eliminar </button></a>
+        <a href="{{ url_for('eliminarComentarioById', id = comentario.comentarioId) }}"> <button class="btn-secundario"><span class="oi oi-trash"></span> Eliminar </button></a>
 
 {% endif %}
          </div>
@@ -184,7 +184,7 @@
 
 
 
-            <h9 style="color: Gray"> {{comentario["fechahora"]}}</h9>
+            <p style="color: Gray"> {{comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
             <p>{{comentario["contenido"]}}</p>
 
         <br>
@@ -195,7 +195,7 @@
 
 
         <br>
-        <a href="{{url_for('eliminarComentarioById', id = comentario["comentarioId"])}}"> <button class="btn-secundario"><span class="oi oi-trash"></span> Eliminar </button></a>
+        <a href="{{url_for('eliminarComentarioById', id = comentario.comentarioId) }}"> <button class="btn-secundario"><span class="oi oi-trash"></span> Eliminar </button></a>
 
          </div>
 
