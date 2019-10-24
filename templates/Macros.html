@@ -118,32 +118,24 @@
 
         {% if comentario.usuario.admin == 0 %}
 
-        <h4> {{comentario["usuario"]}} </h4>
+        <h4> {{ comentario.usuario }} </h4>
 
             {% else %}
 
-        <h4> {{comentario["usuario"]}}
+        <h4> {{ comentario.usuario }}
         <img src="{{url_for('static', filename = 'images/correct.svg')}}" width="20" height="20" class="d-inline-block align-right" alt="Administrador" style="margin-bottom: 4px">
         </h4>
             {% endif %}
 
 
-            <p style="color: Gray"> {{comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
-            <p>{{comentario["contenido"]}}</p>
+            <p style="color: Gray"> {{ comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
+            <p>{{ comentario.contenido }}</p>
 
         <br>
 
     </div>
 
-    <div class="col-md-2">
-
-{% if (comentario["usuarioId"] == 220) or (comentario.evento["usuarioId"] == 220 ) %}
-
-        <br>
-        <a href="{{ url_for('eliminarComentarioById', id = comentario.comentarioId) }}"> <button class="btn-secundario"><span class="oi oi-trash"></span> Eliminar </button></a>
-
-{% endif %}
-         </div>
+    <div class="col-md-2"></div>
 
 </div>
 
@@ -172,11 +164,11 @@
     <div class="col-lg-10 col-md-10" style="color: white">
             {% if comentario.usuario.admin == 0 %}
 
-            <h4> {{comentario["usuario"]}} </h4>
+            <h4> {{ comentario.usuario }} </h4>
 
             {% else %}
 
-            <h4> {{comentario["usuario"]}}
+            <h4> {{ comentario.usuario }}
             <img src="{{url_for('static', filename = 'images/correct.svg')}}" width="20" height="20" class="d-inline-block align-right" alt="Administrador" style="margin-bottom: 4px">
             </h4>
             {% endif %}
@@ -184,8 +176,8 @@
 
 
 
-            <p style="color: Gray"> {{comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
-            <p>{{comentario["contenido"]}}</p>
+            <p style="color: Gray"> {{ comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
+            <p>{{ comentario.contenido }}</p>
 
         <br>
 

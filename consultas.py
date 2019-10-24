@@ -15,7 +15,7 @@ def listar_eventos_pendientes():
 
 def get_evento(id):
 
-    evento = db.session.query(Evento).filter(Evento.eventoId == id).one()
+    evento = db.session.query(Evento).filter(Evento.eventoId == id).first_or_404()
 
     return evento
 

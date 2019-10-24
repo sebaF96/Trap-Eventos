@@ -213,7 +213,7 @@ def eliminarEventoById(id):
 def eliminarComentarioById(id):
 
     comentario = get_comentario(id)
-    if current_user.is_admin() or current_user.is_owner(comentario):
+    if current_user.is_admin() or current_user.is_owner(comentario) or current_user.is_owner(comentario.evento):
         db.session.delete(comentario)
         db.session.commit()
         flash('Comentario eliminado!', 'success')
