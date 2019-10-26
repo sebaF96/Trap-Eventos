@@ -22,7 +22,7 @@ def get_evento(id):
 
 def get_comentario(id):
 
-    return db.session.query(Comentario).filter(Comentario.comentarioId == id).one()
+    return db.session.query(Comentario).filter(Comentario.comentarioId == id).first_or_404()
 
 
 def listar_miseventos(id):

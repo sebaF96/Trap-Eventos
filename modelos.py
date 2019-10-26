@@ -75,18 +75,16 @@ class Usuario(UserMixin, db.Model):
 
     comentarios = db.relationship("Comentario", back_populates="usuario", cascade="all, delete-orphan")
 
-    #  No permitir leer la pass de un usuario
     @property
     def password(self):
         raise AttributeError('La password no puede leerse')
-    #  Al setear la pass generar un hash
+
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def get_id(self):
         return self.usuarioId
-    #  Al verififcar pass comparar hash del valor ingresado con el de la db
 
     def verificar_pass(self, password):
         return check_password_hash(self.password_hash, password)
