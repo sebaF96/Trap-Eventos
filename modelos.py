@@ -123,6 +123,25 @@ class Comentario(db.Model):
 
     eventoId = db.Column(db.Integer, db.ForeignKey('evento.eventoId'), nullable=False)
 
+    def to_json(self):
+        comentario_json = {
+            'comentarioId': url_for('apiGetComentarioById', id=self.comentarioId, _external=True),
+            'usuario': self.usuario.nombre + ' ' + self.usuario.apellido,
+            'contenido': self.contenido,
+            'evento': url_for('apiGetEventoById', id=self.eventoId, _external=True)
+        }
+
+        return comentario_json
+
+    @staticmethod
+    def from_json(comentario_json):
+
+        usuario = comentario_json.get('usuario')
+        contenido = comentario_json.get('contenido')
+        evento = comentario_json.get('evento')
+
+        return Comentario(usuario=usuario, contenido=contenido, evento=evento)
+
 
 @login_manager.user_loader
 def load_user(user_id):
