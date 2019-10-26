@@ -1,6 +1,7 @@
 from run import db, app, login_manager
-from werkzeug.security import generate_password_hash, check_password_hash   # Permite generar y verificar pass con hash      # TOKENS
+from werkzeug.security import generate_password_hash, check_password_hash   # TOKENS
 from flask_login import UserMixin, LoginManager
+from flask import url_for
 
 
 class Evento(db.Model):
@@ -28,6 +29,32 @@ class Evento(db.Model):
     usuarioId = db.Column(db.Integer, db.ForeignKey('usuario.usuarioId'), nullable=False)
 
     aprobado = db.Column(db.Boolean, nullable=False, default=False)
+
+    def to_json(self):
+        evento_json = {
+            'eventoId': url_for('apiGetEventoById', id=self.eventoId, _external=True),
+            'nombre': self.nombre,
+            'fecha': self.fecha,
+            'tipo': self.tipo,
+            'lugar': self.lugar,
+            'imagen': self.imagen,
+            'descripcion': self.descripcion
+        }
+
+        return evento_json
+
+    @staticmethod
+    def from_json(evento_json):
+
+        nombre = evento_json.get('nombre')
+        fecha = evento_json.get('fecha')
+        tipo = evento_json.get('tipo')
+        lugar = evento_json.get('lugar')
+        imagen = evento_json.get('imagen')
+        descripcion = evento_json.get('descripcion')
+
+        return Evento(nombre=nombre, tipo=tipo, lugar=lugar, imagen=imagen,
+                      descripcion=descripcion, fecha=fecha)
 
 
 class Usuario(UserMixin, db.Model):
