@@ -1,6 +1,7 @@
 from run import db, app, login_manager
-from werkzeug.security import generate_password_hash, check_password_hash   # Permite generar y verificar pass con hash      # TOKENS
+from werkzeug.security import generate_password_hash, check_password_hash   # TOKENS
 from flask_login import UserMixin, LoginManager
+from flask import url_for
 
 
 class Evento(db.Model):
@@ -29,6 +30,32 @@ class Evento(db.Model):
 
     aprobado = db.Column(db.Boolean, nullable=False, default=False)
 
+    def to_json(self):
+        evento_json = {
+            'eventoId': url_for('apiGetEventoById', id=self.eventoId, _external=True),
+            'nombre': self.nombre,
+            'fecha': self.fecha,
+            'tipo': self.tipo,
+            'lugar': self.lugar,
+            'imagen': self.imagen,
+            'descripcion': self.descripcion
+        }
+
+        return evento_json
+
+    @staticmethod
+    def from_json(evento_json):
+
+        nombre = evento_json.get('nombre')
+        fecha = evento_json.get('fecha')
+        tipo = evento_json.get('tipo')
+        lugar = evento_json.get('lugar')
+        imagen = evento_json.get('imagen')
+        descripcion = evento_json.get('descripcion')
+
+        return Evento(nombre=nombre, tipo=tipo, lugar=lugar, imagen=imagen,
+                      descripcion=descripcion, fecha=fecha)
+
 
 class Usuario(UserMixin, db.Model):
 
@@ -48,18 +75,16 @@ class Usuario(UserMixin, db.Model):
 
     comentarios = db.relationship("Comentario", back_populates="usuario", cascade="all, delete-orphan")
 
-    #  No permitir leer la pass de un usuario
     @property
     def password(self):
         raise AttributeError('La password no puede leerse')
-    #  Al setear la pass generar un hash
+
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def get_id(self):
         return self.usuarioId
-    #  Al verififcar pass comparar hash del valor ingresado con el de la db
 
     def verificar_pass(self, password):
         return check_password_hash(self.password_hash, password)
@@ -95,6 +120,25 @@ class Comentario(db.Model):
     evento = db.relationship("Evento", back_populates="comentarios")
 
     eventoId = db.Column(db.Integer, db.ForeignKey('evento.eventoId'), nullable=False)
+
+    def to_json(self):
+        comentario_json = {
+            'comentarioId': url_for('apiGetComentarioById', id=self.comentarioId, _external=True),
+            'usuario': self.usuario.nombre + ' ' + self.usuario.apellido,
+            'contenido': self.contenido,
+            'evento': url_for('apiGetEventoById', id=self.eventoId, _external=True)
+        }
+
+        return comentario_json
+
+    @staticmethod
+    def from_json(comentario_json):
+
+        usuario = comentario_json.get('usuario')
+        contenido = comentario_json.get('contenido')
+        evento = comentario_json.get('evento')
+
+        return Comentario(usuario=usuario, contenido=contenido, evento=evento)
 
 
 @login_manager.user_loader
