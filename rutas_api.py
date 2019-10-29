@@ -1,8 +1,8 @@
 from flask import request
 from run import csrf, app, db
-from modelos import *
 from flask import jsonify
 from consultas import listar_comentarios, get_comentario, get_evento, listar_eventos_pendientes
+from mail import enviarMail
 
 
 # Ver Evento por Id
@@ -51,6 +51,8 @@ def apiAprobarEvento(id):
     evento.aprobado = 1
     db.session.add(evento)
     db.session.commit()
+
+    enviarMail(evento.usuario.email, 'Evento aprobado!', 'evento_aprobado', evento=evento)
 
     return jsonify(evento.to_json()), 201
 

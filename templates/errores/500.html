@@ -2,9 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{url_for('static', filename = 'css/open-iconic/font/css/open-iconic-bootstrap.css')}}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+        <link rel="icon" href="{{url_for('static', filename = 'images/partypoker.png')}}">
+        <link rel="stylesheet" href={{url_for('static', filename = 'css/style.css')}}>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+    <title> Internal server error</title>
 </head>
-<body>
+
+<body background="{{url_for('static', filename = 'images/background.jpg')}}">
+
+
+<div class="container">
+
+    <div class="row">
+       <div class="col-md-2">
+           <h1 class="display-4" style="font-size: 200px"> :( </h1>
+
+       </div>
+
+        <div class="col-md-10" style="margin-top: 40px">
+            <p style="color: black; font-size: 50px">Ha ocurrido un error, es todo lo que sabemos. Vuelve a intentarlo mas tarde</p>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="text-align: center">
+
+            <img src="{{url_for('static', filename = 'images/partypoker.png')}}" class="img-fluid rounded"
+                     alt="Responsive image" style="margin-top:-90px">
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
 
 </body>
 </html>
