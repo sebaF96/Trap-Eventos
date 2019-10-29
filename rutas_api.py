@@ -1,9 +1,8 @@
-from flask import redirect, url_for, request
-from datetime import datetime
-from run import app,db
+from flask import request
+from run import csrf, app, db
 from modelos import *
 from flask import jsonify
-from consultas import listar_comentarios, get_comentario, get_evento
+from consultas import listar_comentarios, get_comentario, get_evento, listar_eventos_pendientes
 
 
 # Ver Evento por Id
@@ -19,7 +18,7 @@ def apiGetEventoById(id):
 @app.route('/')
 @app.route('/api/evento/', methods=['GET'])
 def apiListarEventos():
-    lista_eventos = db.session.query(Evento).all()
+    lista_eventos = listar_eventos_pendientes()
 
     return jsonify({'eventos': [evento.to_json() for evento in lista_eventos]})
 
@@ -28,6 +27,7 @@ def apiListarEventos():
 # curl -i -X PUT -H "Content-Type:application/json" -H "Accept:application/json" http://localhost:5000/api/evento/136
 # -d '{"nombre":"CEEEEEEB", "tipo":"edited"}'
 @app.route('/api/evento/<id>', methods=['PUT'])
+@csrf.exempt
 def apiActualizarEvento(id):
     evento = get_evento(id)
     evento.nombre = request.json.get('nombre', evento.nombre)
@@ -35,6 +35,7 @@ def apiActualizarEvento(id):
     evento.tipo = request.json.get('tipo', evento.tipo)
     evento.lugar = request.json.get('lugar', evento.lugar)
     evento.descripcion = request.json.get('descripcion', evento.descripcion)
+    evento.aprobado = 0
     db.session.add(evento)
     db.session.commit()
 
@@ -44,6 +45,7 @@ def apiActualizarEvento(id):
 # curl -i -X PUT -H "Content-Type:application/json" -H
 # "Accept:application/json" http://localhost:5000/api/evento/47/aprobar
 @app.route('/api/evento/<id>/aprobar', methods=['PUT'])
+@csrf.exempt
 def apiAprobarEvento(id):
     evento = get_evento(id)
     evento.aprobado = 1
@@ -55,6 +57,7 @@ def apiAprobarEvento(id):
 # Eliminar evento
 # curl -i -X DELETE -H "Accept: application/json" http://localhost:5000/api/evento/134
 @app.route('/api/evento/<id>', methods=['DELETE'])
+@csrf.exempt
 def eliminarEvento(id):
     evento = get_evento(id)
     db.session.delete(evento)
@@ -81,6 +84,7 @@ def apiGetComentariosByEvento(evento):
 # Eliminar comentario
 # curl -i -X DELETE -H "Accept: application/json" http://localhost:5000/api/comentario/134
 @app.route('/api/comentario/<id>', methods=['DELETE'])
+@csrf.exempt
 def apiEliminarComentarioById(id):
     comentario = get_comentario(id)
     db.session.delete(comentario)
