@@ -6,6 +6,7 @@
 /__pycache__
 pyvenv.cfg
 .env
+logfile
 .idea/
 /static/css/open-iconic/svg
 /static/css/open-iconic/png
