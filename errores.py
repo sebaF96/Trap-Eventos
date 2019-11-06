@@ -28,3 +28,28 @@ def internal_server_error(e):
         return response
     # Sino responder con template HTML
     return render_template('errores/500.html'), 500
+
+
+@app.errorhandler(400)
+def badrequest(e):
+    print(e)
+    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+        # Responder con JSON
+        response = jsonify({'error': 'Bad request'})
+        response.status_code = 400
+        return response
+    # Sino responder con template HTML
+    return render_template('errores/500.html'), 400
+
+
+@app.errorhandler(500)
+def badrequest(e):
+    print(e)
+    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+        # Responder con JSON
+        response = jsonify({'error': 'Bad Gateway'})
+        response.status_code = 400
+        return response
+    # Sino responder con template HTML
+    return render_template('errores/500.html'), 400
+
