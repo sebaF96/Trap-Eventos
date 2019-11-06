@@ -1,6 +1,6 @@
 from flask import render_template
 from flask import flash
-from flask import redirect, url_for, request
+from flask import redirect, url_for, request, abort
 from werkzeug.utils import secure_filename
 import os.path
 import os
@@ -30,6 +30,8 @@ def has_permission(user, evento):
 @app.route('/',  methods=["POST", "GET"])
 @app.route('/<int:pag>', methods=["POST", "GET"])
 def index(pag=1):
+
+    # abort(400)
     filtro = Filtro()
     titulo = "Trap Eventos - Home"
     pag_tam = 9

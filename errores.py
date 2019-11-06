@@ -21,6 +21,8 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     print(e)
+    with open('logfile', 'a') as file:
+        file.write(str(datetime.datetime.now()) + ' - ' + str(e) + '\n')
     # Si la solicitud acepta json y no HTML
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
@@ -34,6 +36,8 @@ def internal_server_error(e):
 @app.errorhandler(400)
 def badrequest(e):
     print(e)
+    with open('logfile', 'a') as file:
+        file.write(str(datetime.datetime.now()) + ' - ' + str(e) + '\n')
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
         response = jsonify({'error': 'Bad request'})
@@ -43,8 +47,8 @@ def badrequest(e):
     return render_template('errores/500.html'), 400
 
 
-@app.errorhandler(500)
-def badrequest(e):
+@app.errorhandler(502)
+def badgateway(e):
     print(e)
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
@@ -52,7 +56,9 @@ def badrequest(e):
         response.status_code = 400
         return response
     # Sino responder con template HTML
-    return render_template('errores/500.html'), 400
+    with open('logfile', 'a') as file:
+        file.write(str(datetime.datetime.now()) + ' - ' + str(e) + '\n')
+    return render_template('errores/500.html'), 502
 
 
 @app.errorhandler(Exception)
