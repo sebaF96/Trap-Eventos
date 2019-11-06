@@ -1,6 +1,5 @@
 from flask import render_template, request, jsonify
 from run import app
-from sqlalchemy.exc import DatabaseError, InternalError
 import datetime
 
 # Manejar error de página no encontrada
@@ -64,14 +63,13 @@ def badgateway(e):
 @app.errorhandler(Exception)
 def DBerror(e):
     print(e)
-    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
-        # Responder con JSON
-        response = jsonify({'error': 'Uexpected error ' + str(e)})
-        return response
-    # Sino responder con template HTML
-
     with open('logfile', 'a') as file:
         file.write(str(datetime.datetime.now()) + ' - ' + str(e) + '\n')
+    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+        # Responder con JSON
+        response = jsonify({'error': 'Unexpected error ' + str(e)})
+        return response
+    # Sino responder con template HTML
     return "<h1>Ups! Algo ha salido mal.</h1> <h3> por favor vuelva a intentar mas tarde :)</h3>"  # + str(e)
 
 

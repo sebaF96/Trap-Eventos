@@ -2,6 +2,7 @@ from flask import Flask
 from flask_wtf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 import os
+import sqlalchemy.exc
 from dotenv import load_dotenv
 from flask_mail import Mail, Message  # Importar para enviar Mail
 from flask_login import LoginManager
@@ -14,6 +15,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+os.getenv('DB_CONECTION')+'@localhost/final_database'
 db = SQLAlchemy(app)
+
 
 # Configuraciones de mail
 app.config['MAIL_HOSTNAME'] = 'localhost'

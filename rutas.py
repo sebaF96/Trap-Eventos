@@ -69,6 +69,7 @@ def miseventos():
 
 @app.route('/ver-evento/<id>', methods=["POST", "GET"])
 def vistaevento(id):
+    # abort(500)
     evento = get_evento(id)
 
     if evento.aprobado == 1 or has_permission(current_user, evento):
@@ -234,6 +235,7 @@ def ingresar():
 
         if validarExistente(formulario.email.data):
             flash('Cuenta creada con exito!', 'success')
+            flash('Pronto recibiras un email de bienvenida!', 'success')
             formulario.mostrar_datos()
 
             usuario = Usuario(nombre=formulario.nombre.data, apellido=formulario.apellido.data,
