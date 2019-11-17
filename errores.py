@@ -15,6 +15,20 @@ def page_not_found(e):
     # Sino responder con template HTML
     return render_template('errores/404.html'), 404
 
+# Manejar error de página no encontrada
+@app.errorhandler(405)
+def method_not_allowed(e):
+    print(e)
+    with open('logfile', 'a') as file:
+        file.write(str(datetime.datetime.now()) + ' - ' + str(e) + '\n')
+    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+        # Responder con JSON
+        response = jsonify({'error': 'not found'})
+        response.status_code = 405
+        return response
+    # Sino responder con template HTML
+    return "hola", 405
+
 
 # Manejar error de error interno
 @app.errorhandler(500)
@@ -70,7 +84,4 @@ def DBerror(e):
         response = jsonify({'error': 'Unexpected error ' + str(e)})
         return response
     # Sino responder con template HTML
-    return "<h1>Ups! Algo ha salido mal.</h1> <h3> por favor vuelva a intentar mas tarde :)</h3>"  # + str(e)
-
-
-
+    return render_template('errores/500.html'), 500
