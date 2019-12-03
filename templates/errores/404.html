@@ -1,37 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-
-
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{url_for('static', filename = 'css/open-iconic/font/css/open-iconic-bootstrap.css')}}" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-        <link rel="icon" href="{{url_for('static', filename = 'images/partypoker.png')}}">
-        <link rel="stylesheet" href={{url_for('static', filename = 'css/style.css')}}>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-
-
-
-    <title> Error 404</title>
-</head>
-
-<body background="{{url_for('static', filename = 'images/background.jpg')}}">
-
+{% extends 'cabecerapie.html' %}
+{% block contenido %}
 
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-<h1 class="display-4"> <p class="text-center"> Pagina no encontrada </p></h1>
+<h1 class="display-4" style="margin-top: 40px"> <p class="text-center"> Pagina no encontrada </p></h1>
     </div>
   </div>
     <div class="row">
@@ -39,7 +12,7 @@
 
         <div class="col-md-10" style="text-align: center">
 
-            <img src="{{url_for('static', filename = 'images/404.png' )}}" style="margin-top: -30px; height: 531px; width: 720px;" class="card-img-top" alt="...">
+            <img src="{{url_for('static', filename = 'images/404.png' )}}" style="margin-top: -30px; height: 451px; width: 640px;" class="card-img-top" alt="...">
 
         </div>
 
@@ -55,71 +28,4 @@
 </div>
 
 
-
-<footer class="page-footer font-small  pt-4" style="margin-top: 30px">
-
-
-    <div class="container">
-
-
-      <div class="row">
-
-
-        <div class="col-lg-6 mb-6">
-
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{url_for('index')}}" style="text-decoration: none">
-                    <h1 style="color: orangered; font-size: 65px">  Trap Eventos </h1>
-                    </a>
-                </div>
-            </div>
-
-            <div class="row">
-          <!-- Form -->
-
-                <div class="col-md-1 sm-1" style="margin-right: 21px; margin-left: 6px">
-                    <a href="http://www.facebook.com/sebba.ff" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/facebook.svg')}}" width="40" height="40" class="d-inline-block align-left" alt="">  </a>
-                </div>
-                <div class="col-md-1 sm-1" style="margin-right: 21px">
-                    <a href="http://www.twitter.com/ff_seba" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/twitter.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
-                </div>
-                <div class="col-md-1 sm-1" style="margin-right: 21px">
-                    <a href="http://www.instagram.com/fernandez.seba" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/instagram.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
-                </div>
-                <div class="col-md-1 sm-1" style="margin-right: 21px">
-                    <a href="http://www.github.com/sebaF96/programacion-final" style="text-decoration: none"> <img src="{{url_for('static', filename = 'images/github.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
-                </div>
-                <div class="col-md-1 sm-1" style="margin-right: 21px">
-                    <a href="http://www.youtube.com/pokerstars" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/youtube.svg')}}" width="40" height="40" class="d-inline-block align-left" alt="">  </a>
-                </div>
-                <div class="col-md-1 sm-1">
-                    <a href="http://www.twitch.tv/arteezy" style="text-decoration: none" target="_blank"> <img src="{{url_for('static', filename = 'images/twitch.svg')}}" width="40" height="40" class="d-inline-block align-left" alt=""></a>
-                </div>
-                </div>
-
-
-            </div>
-
-
-
-            <div class="col-lg-6 mb-6">
-			<br>
-
-                <p style="color: white"> © Copyright 2019-2020. The Trap Eventos™ mark is owned by Sebastian Fernandez Cianci, Corporation.</p>
-
-
-            </div>
-
-        </div>
-
-
-      </div>
-
-
-  </footer>
-
-
-
-</body>
-</html>
+{% endblock %}

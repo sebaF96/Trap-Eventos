@@ -1,176 +1,168 @@
-{% macro mostrar_evento(evento)%}
+{% macro mostrar_evento(evento) %}
 
-<div class="col-md-4">
+    <div class="col-md-4">
 
-<div class="card" style="height: 700px">
-            <img  style="height: 253px; width: 393px" src="{{url_for('static', filename = 'images/'+evento.imagen )}}" class="card-img-top" alt="...">
+        <div class="card" style="height: 700px">
+            <img style="height: 253px; width: 393px" src="{{ url_for('static', filename = 'images/'+evento.imagen ) }}"
+                 class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title"> <a style="color: orangered; text-decoration: none" href={{url_for('vistaevento', id = evento.eventoId)}}> {{ evento.nombre }} </a><span class="badge badge-secondary"><span class="oi oi-tag" aria-hidden="true"></span> {{ evento.tipo }}</span></h5>
+                <h5 class="card-title"><a style="color: orangered; text-decoration: none"
+                                          href={{ url_for('vistaevento', id = evento.eventoId) }}> {{ evento.nombre }} </a><span
+                        class="badge badge-secondary"><span class="oi oi-tag"
+                                                            aria-hidden="true"></span> {{ evento.tipo }}</span></h5>
                 <div style="height: 100px; overflow: hidden">
-                <p class="card-text"> {{ evento.descripcion }} </p>
+                    <p class="card-text"> {{ evento.descripcion }} </p>
                 </div>
             </div>
-
-
 
 
             <div class="card-footer">
                 <ul class="list-group list-group-flush">
 
-                        <li class="list-group-item"> <span class="badge badge-info"> <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span> Fecha</span> {{ evento.fecha.strftime("%d %B, %Y") }}</li>
-                        <li class="list-group-item"> <span class="badge badge-success"> <span class="oi oi-clock" title="clock" aria-hidden="true"></span> Hora</span> {{ evento.hora.strftime("%H:%M") }} </li>
-                        <li class="list-group-item"> <span class="badge badge-secondary"> <span class="oi oi-map-marker" title="place" aria-hidden="true"></span> Lugar</span> {{ evento.lugar }}</li>
+                    <li class="list-group-item"><span class="badge badge-info"> <span class="oi oi-calendar"
+                                                                                      title="calendar"
+                                                                                      aria-hidden="true"></span> Fecha</span> {{ evento.fecha.strftime("%d %B, %Y") }}
+                    </li>
+                    <li class="list-group-item"><span class="badge badge-success"> <span class="oi oi-clock"
+                                                                                         title="clock"
+                                                                                         aria-hidden="true"></span> Hora</span> {{ evento.hora.strftime("%H:%M") }}
+                    </li>
+                    <li class="list-group-item"><span class="badge badge-secondary"> <span class="oi oi-map-marker"
+                                                                                           title="place"
+                                                                                           aria-hidden="true"></span> Lugar</span> {{ evento.lugar }}
+                    </li>
 
-                 </ul>
+                </ul>
                 <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" class="btn btn-primario">Ver mas</a>
             </div>
+        </div>
+
     </div>
 
-</div>
-
 {% endmacro %}
-
-
-
-
-
-
-
-
 
 
 {% macro mis_eventos(evento) %}
 
-<tr>
-
-      <th scope="row"> <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" class="evento-tabla"> {{ evento.nombre }} </a></th>
-      <td style="width: 180px">{{ evento.fecha.strftime("%d %b %Y")}} | {{evento.hora.strftime("%H:%M") }}</td>
-      <td>{{ evento.lugar }}</td>
+    <tr>
+        <th scope="row"><a href="{{ url_for('vistaevento', id = evento.eventoId) }}" class="evento-tabla"> {{ evento.nombre }} </a></th>
+        <td style="width: 180px">{{ evento.fecha.strftime("%d %b %Y") }} | {{ evento.hora.strftime("%H:%M") }}</td>
+        <td>{{ evento.lugar }}</td>
 
 
 
         {% if evento.aprobado == 1 %}
-
-            <td class="estado-aprobado"> Aprobado </td>
+            <td class="estado-aprobado"> Aprobado</td>
 
         {% else %}
-            <td class="estado-pendiente"> Pendiente </td>
+            <td class="estado-pendiente"> Pendiente</td>
 
         {% endif %}
 
 
-      <td style="width: 350px">
-          <a href="{{ url_for('vistaevento', id = evento.eventoId) }}"><button type="button" class="btn btn-primario">Ver <span class="oi oi-eye"></span></button></a>
-          <a href="{{url_for('actualizar', id = evento.eventoId) }}"><button type="button" class="btn btn-primario">Editar <span class="oi oi-pencil"></span></button></a>
-          <a href="{{url_for('eliminarEventoById', id = evento.eventoId )}}"><button type="button" class="btn btn-danger">Eliminar <span class="oi oi-trash"></span></button></a>
+        <td style="width: 350px">
+            <a href="{{ url_for('vistaevento', id = evento.eventoId) }}">
+                <button type="button" class="btn btn-primario">Ver <span class="oi oi-eye"></span></button>
+            </a>
+            <a href="{{ url_for('actualizar', id = evento.eventoId) }}">
+                <button type="button" class="btn btn-primario">Editar <span class="oi oi-pencil"></span></button>
+            </a>
+            <a href="{{ url_for('eliminarEventoById', id = evento.eventoId ) }}">
+                <button type="button" class="btn btn-danger">Eliminar <span class="oi oi-trash"></span></button>
+            </a>
 
-      </td>
-</tr>
+        </td>
+    </tr>
 
 
 
 {% endmacro %}
-
-
-
-
-
-
-
-
-
-
-
 
 
 {% macro eventos_pendientes(evento) %}
 
- <tr>
-        <th scope="row" style="width: 390px"> <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" class="evento-tabla"> {{ evento.nombre }} </a></th>
-            <td style="width: 180px">{{ evento.fecha.strftime("%d %b %Y") }} | {{ evento.hora.strftime("%H:%M") }}</td>
-            <td>{{ evento.lugar }}</td>
+    <tr>
+        <th scope="row" style="width: 390px"><a href="{{ url_for('vistaevento', id = evento.eventoId) }}"
+                                                class="evento-tabla"> {{ evento.nombre }} </a></th>
+        <td style="width: 180px">{{ evento.fecha.strftime("%d %b %Y") }} | {{ evento.hora.strftime("%H:%M") }}</td>
+        <td>{{ evento.lugar }}</td>
 
-	    <td>{{ evento.tipo }}</td>
-     
+        <td>{{ evento.tipo }}</td>
 
-            <td style="width: 280px">
 
-                <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" target="_blank"><button type="button" class="btn btn-secondary"> Ver </button></a>
-                <a href="{{url_for('aprobarEventoById', id = evento.eventoId) }}"><button type="button" class="btn btn-success">Aprobar </button></a>
-                <a href="{{url_for('eliminarEventoById', id = evento.eventoId) }}"><button type="button" class="btn btn-danger">Rechazar </button></a>
+        <td style="width: 280px">
 
-            </td>
- </tr>
+            <a href="{{ url_for('vistaevento', id = evento.eventoId) }}" target="_blank">
+                <button type="button" class="btn btn-secondary"> Ver</button>
+            </a>
+            <a href="{{ url_for('aprobarEventoById', id = evento.eventoId) }}">
+                <button type="button" class="btn btn-success">Aprobar</button>
+            </a>
+            <a href="{{ url_for('eliminarEventoById', id = evento.eventoId) }}">
+                <button type="button" class="btn btn-danger">Rechazar</button>
+            </a>
+
+        </td>
+    </tr>
 
 {% endmacro %}
 
 
-
-
-
-
 {% macro comments(comentario) %}
 
-<div class="row">
+    <div class="row">
 
+        <div class="col-lg-10 col-md-10" style="color: white">
 
-    <div class="col-lg-10 col-md-10" style="color: white">
-
-        {% if comentario.usuario.admin == 0 %}
-
-        <h4> {{ comentario.usuario }} </h4>
+            {% if comentario.usuario.admin == 0 %}
+                <h4> {{ comentario.usuario }} </h4>
 
             {% else %}
-
-        <h4> {{ comentario.usuario }}
-        <img src="{{url_for('static', filename = 'images/correct.svg')}}" width="20" height="20" class="d-inline-block align-right" alt="Administrador" style="margin-bottom: 4px">
-        </h4>
+                <h4> {{ comentario.usuario }}
+                    <img src="{{ url_for('static', filename = 'images/correct.svg') }}" width="20" height="20"
+                         class="d-inline-block align-right" alt="Administrador" style="margin-bottom: 4px">
+                </h4>
             {% endif %}
 
 
             <p style="color: Gray"> {{ comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
             <p>{{ comentario.contenido }}</p>
 
-        <br>
+            <br>
+
+        </div>
+
+        <div class="col-md-2"></div>
 
     </div>
 
-    <div class="col-md-2"></div>
 
-</div>
+    <div class="row">
 
-
-<div class="row">
-
-    <div class="col-md-12">
-        <hr>
+        <div class="col-md-12">
+            <hr>
+        </div>
     </div>
-</div>
 
-{%endmacro%}
-
-
-
-
-
-
+{% endmacro %}
 
 
 {% macro comments_admin(comentario) %}
 
-<div class="row">
+    <div class="row">
 
 
-    <div class="col-lg-10 col-md-10" style="color: white">
+        <div class="col-lg-10 col-md-10" style="color: white">
             {% if comentario.usuario.admin == 0 %}
 
-            <h4> {{ comentario.usuario }} </h4>
+                <h4> {{ comentario.usuario }} </h4>
 
             {% else %}
 
-            <h4> {{ comentario.usuario }}
-            <img src="{{url_for('static', filename = 'images/correct.svg')}}" width="20" height="20" class="d-inline-block align-right" alt="Administrador" style="margin-bottom: 4px">
-            </h4>
+                <h4> {{ comentario.usuario }}
+                    <img src="{{ url_for('static', filename = 'images/correct.svg') }}" width="20" height="20"
+                         class="d-inline-block align-right" alt="Administrador" style="margin-bottom: 4px">
+                </h4>
             {% endif %}
 
 
@@ -179,28 +171,30 @@
             <p style="color: Gray"> {{ comentario.fechahora.strftime("%d %b %Y - %H:%M") }}</p>
             <p>{{ comentario.contenido }}</p>
 
-        <br>
+            <br>
+
+        </div>
+
+        <div class="col-md-2">
+
+
+            <br>
+            <a href="{{ url_for('eliminarComentarioById', id = comentario.comentarioId) }}">
+                <button class="btn-secundario"><span class="oi oi-trash"></span> Eliminar</button>
+            </a>
+
+        </div>
 
     </div>
 
-    <div class="col-md-2">
 
+    <div class="row">
 
-        <br>
-        <a href="{{url_for('eliminarComentarioById', id = comentario.comentarioId) }}"> <button class="btn-secundario"><span class="oi oi-trash"></span> Eliminar </button></a>
-
-         </div>
-
-</div>
-
-
-<div class="row">
-
-    <div class="col-md-12">
-        <hr>
+        <div class="col-md-12">
+            <hr>
+        </div>
     </div>
-</div>
 
-{%endmacro%}
+{% endmacro %}
 
 
