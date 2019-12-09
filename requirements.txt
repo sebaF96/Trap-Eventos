@@ -1,3 +1,4 @@
+sqlalchemy
 Flask
 Flask-Login
 Flask-Mail

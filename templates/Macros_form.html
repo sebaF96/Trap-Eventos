@@ -12,7 +12,7 @@
 {% macro mostrar_campo(campo) %}
 	{{ campo.label }}
 	{{ campo(**kwargs)|safe }}
-	{{mostrar_error(campo)}}
+	{{ mostrar_error(campo) }}
 {% endmacro %}
 
 

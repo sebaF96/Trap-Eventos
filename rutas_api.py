@@ -3,6 +3,7 @@ from run import csrf, app, db
 from flask import jsonify
 from consultas import listar_comentarios, get_comentario, get_evento, listar_eventos_pendientes
 from mail import enviarMail
+from sqlalchemy.exc import SQLAlchemyError
 
 
 # Ver Evento por Id
@@ -36,8 +37,11 @@ def apiActualizarEvento(id):
     evento.lugar = request.json.get('lugar', evento.lugar)
     evento.descripcion = request.json.get('descripcion', evento.descripcion)
     evento.aprobado = 0
-    db.session.add(evento)
-    db.session.commit()
+    try:
+        db.session.add(evento)
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
 
     return jsonify(evento.to_json()), 201
 
@@ -47,6 +51,7 @@ def apiActualizarEvento(id):
 @app.route('/api/evento/<id>/aprobar', methods=['PUT'])
 @csrf.exempt
 def apiAprobarEvento(id):
+
     evento = get_evento(id)
     evento.aprobado = 1
     db.session.add(evento)

@@ -1,5 +1,6 @@
 from run import db
 from modelos import Evento, Usuario, Comentario
+import sqlalchemy.exc
 
 
 def mostrar_eventos():
@@ -27,9 +28,12 @@ def get_comentario(id):
 
 def listar_miseventos(id):
 
-    lista_eventos = db.session.query(Evento).filter(Evento.usuarioId == id).all()
-
-    return lista_eventos
+    try:
+        lista_eventos = db.session.query(Evento).filter(Evento.usuarioId == id).all()
+        return lista_eventos
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        print(e)
+        return e
 
 
 def listar_comentarios(id):

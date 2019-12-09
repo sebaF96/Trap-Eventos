@@ -216,9 +216,9 @@ footer {
 .nav-item:hover
 {
     border-bottom: 2px solid orangered;
-
-
+    display: flow;
 }
+
 #banner1, #banner2, #banner3, #banner4, #banner5
 {
     color: orangered;

@@ -6,7 +6,9 @@
 /__pycache__
 pyvenv.cfg
 .env
+logfile
 .idea/
+mail_logfile
 /static/css/open-iconic/svg
 /static/css/open-iconic/png
 /static/css/open-iconic/font
