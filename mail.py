@@ -23,23 +23,23 @@ def mail_sender(app, msg, to, subject):
         except smtplib.SMTPAuthenticationError as e:
             print("Error de autenticacion: " + str(e))
             with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now()) + " Error de autenticacion: " + str(e))
-                file.writelines('Recorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Error de autenticacion: " + str(e))
+                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
         except smtplib.SMTPServerDisconnected as e:
             print("Servidor desconectado: " + str(e))
             with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now()) + " Servidor desconectado: " + str(e) + '\n')
-                file.writelines('Recorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Servidor desconectado: " + str(e))
+                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
         except smtplib.SMTPSenderRefused as e:
             print("Se requiere autenticacion: " + str(e))
             with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now()) + " Se requiere autenticacion: " + str(e) + '\n')
-                file.writelines('Recorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Se requiere autenticacion: " + str(e))
+                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
         except smtplib.SMTPException as e:
             print("Unexpected error: " + str(e))
             with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now()) + " Unexpected error: " + str(e) + '\n')
-                file.writelines('Recorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Unexpected error: " + str(e))
+                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
 
 
 

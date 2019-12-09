@@ -70,7 +70,7 @@ def badgateway(e):
         return response
     # Sino responder con template HTML
     with open('logfile', 'a') as file:
-        file.write(str(datetime.datetime.now()) + ' - ' + str(e) + '\n')
+        file.write(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + ' - ' + str(e) + '\n')
     return render_template('errores/500.html'), 502
 
 
@@ -78,7 +78,7 @@ def badgateway(e):
 def DBerror(e):
     print(e)
     with open('logfile', 'a') as file:
-        file.write(str(datetime.datetime.now()) + ' - ' + str(e) + '\n')
+        file.write(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + ' - ' + str(e) + "\n")
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
         response = jsonify({'error': 'Unexpected error ' + str(e)})
