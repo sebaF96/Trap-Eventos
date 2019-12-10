@@ -31,7 +31,6 @@ def has_permission(user, evento):
 @app.route('/<int:pag>', methods=["POST", "GET"])
 def index(pag=1):
 
-    # abort(400)
     filtro = Filtro()
     titulo = "Trap Eventos - Home"
     pag_tam = 9
