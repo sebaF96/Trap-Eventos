@@ -34,6 +34,7 @@ def index(pag=1):
     filtro = Filtro()
     titulo = "Trap Eventos - Home"
     pag_tam = 9
+    paginar = True
     eventos = db.session.query(Evento).filter(Evento.fecha >= db.func.current_timestamp(),
                                               Evento.aprobado == 1).order_by(Evento.fecha).paginate(pag, pag_tam,
                                                                                                     error_out=False)
@@ -50,10 +51,9 @@ def index(pag=1):
             lista_eventos = lista_eventos.filter(Evento.nombre.ilike('%'+filtro.titulo.data+'%'))
 
         eventos = lista_eventos.filter(Evento.aprobado == 1).order_by(Evento.fecha)
+        paginar = False
 
-        return render_template('filtrar.html', lista_eventos=eventos, titulo=titulo, filtro=filtro)
-    else:
-        return render_template('main.html', eventos=eventos, titulo=titulo, filtro=filtro)
+    return render_template('main.html', eventos=eventos, titulo=titulo, filtro=filtro, paginar=paginar)
 
 
 @app.route('/mis-eventos')
@@ -237,9 +237,8 @@ def ingresar():
             flash('Pronto recibiras un email de bienvenida!', 'success')
             formulario.mostrar_datos()
 
-            usuario = Usuario(nombre=formulario.nombre.data, apellido=formulario.apellido.data,
-                              email=formulario.email.data,
-                              password=formulario.contrasenia.data)
+            usuario = Usuario(formulario.nombre.data, formulario.apellido.data, formulario.email.data,
+                              formulario.contrasenia.data)
             db.session.add(usuario)
             db.session.commit()
 

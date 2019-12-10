@@ -14,6 +14,7 @@ def apiGetEventoById(id):
 
     return jsonify(evento.to_json())
 
+
 # Listar eventos
 # curl -H "Accept:application/json" http://localhost:5000/api/evento/
 @app.route('/')
@@ -44,6 +45,7 @@ def apiActualizarEvento(id):
         db.session.rollback()
 
     return jsonify(evento.to_json()), 201
+
 
 # Aprobar evento
 # curl -i -X PUT -H "Content-Type:application/json" -H

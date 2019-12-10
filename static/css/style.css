@@ -68,6 +68,10 @@
     text-decoration: none
 }
 
+.pagination a.active:hover{
+    text-decoration: none
+}
+
 
 
 .btn-crear
