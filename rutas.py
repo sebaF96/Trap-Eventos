@@ -1,6 +1,6 @@
 from flask import render_template
 from flask import flash
-from flask import redirect, url_for, request, abort
+from flask import redirect, url_for, abort
 from werkzeug.utils import secure_filename
 import os.path
 import os
@@ -68,7 +68,7 @@ def miseventos():
 
 @app.route('/ver-evento/<id>', methods=["POST", "GET"])
 def vistaevento(id):
-    # abort(500)
+    abort(500)
     evento = get_evento(id)
 
     if evento.aprobado == 1 or has_permission(current_user, evento):
@@ -101,7 +101,7 @@ def vistaevento(id):
 def crearevento():
     formulario = CrearEvento()
     titulo = "Nuevo Evento"
-
+    abort(502)
     if formulario.validate_on_submit():
         f = formulario.imagen.data
         filename = secure_filename(formulario.nombreevento.data + str(randint(1, 100)))
