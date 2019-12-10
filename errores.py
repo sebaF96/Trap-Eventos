@@ -5,8 +5,13 @@ import datetime
 
 def write_log(e):
     with open('logfile', 'a') as file:
-        file.write(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + ' - ' + str(e))
+        file.write("\n" + str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + ' - ' + str(e))
 
+
+def write_logmail(e, message, subject, to):
+    with open('mail_logfile', 'a') as file:
+        file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " - " + message + str(e))
+        file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
 
 # Manejar error de página no encontrada
 @app.errorhandler(404)

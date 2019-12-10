@@ -4,6 +4,7 @@ from flask import render_template, flash
 from threading import Thread
 import smtplib
 import datetime
+from errores import write_logmail
 
 
 def enviarMail(to, subject, template, **kwargs):
@@ -22,24 +23,19 @@ def mail_sender(app, msg, to, subject):
             mail.send(msg)
         except smtplib.SMTPAuthenticationError as e:
             print("Error de autenticacion: " + str(e))
-            with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Error de autenticacion: " + str(e))
-                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+            write_logmail(e, "Error de autenticacion: ", subject, to)
+
         except smtplib.SMTPServerDisconnected as e:
             print("Servidor desconectado: " + str(e))
-            with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Servidor desconectado: " + str(e))
-                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+            write_logmail(e, "Servidor descontctado: ", subject, to)
+
         except smtplib.SMTPSenderRefused as e:
             print("Se requiere autenticacion: " + str(e))
-            with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Se requiere autenticacion: " + str(e))
-                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+            write_logmail(e, "Se requiere autenticacion: ", subject, to)
+
         except smtplib.SMTPException as e:
             print("Unexpected error: " + str(e))
-            with open('mail_logfile', 'a') as file:
-                file.writelines(str(datetime.datetime.now().strftime("%d %b %Y - %H:%M")) + " Unexpected error: " + str(e))
-                file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
+            write_logmail(e, "Unexpected error: ", subject, to)
 
 
 
