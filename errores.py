@@ -28,7 +28,6 @@ def page_not_found(e):
     return render_template('errores/404.html'), 404
 
 
-# Manejar error de página no encontrada
 @app.errorhandler(405)
 def method_not_allowed(e):
     print(e)

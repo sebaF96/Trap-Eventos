@@ -153,5 +153,3 @@ def load_user(user_id):
         return Usuario.query.get(int(user_id))
     except Exception:
         pass
-
-
