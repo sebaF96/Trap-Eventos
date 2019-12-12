@@ -2,7 +2,6 @@ from flask import Flask
 from flask_wtf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 import os
-import sqlalchemy.exc
 from dotenv import load_dotenv
 from flask_mail import Mail, Message  # Importar para enviar Mail
 from flask_login import LoginManager
@@ -35,4 +34,4 @@ if __name__ == '__main__':
     from rutas import *
     from rutas_api import *
     from errores import *
-    app.run()
+    app.run(debug=True)

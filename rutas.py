@@ -1,6 +1,6 @@
 from flask import render_template
 from flask import flash
-from flask import redirect, url_for, request, abort
+from flask import redirect, url_for, abort
 from werkzeug.utils import secure_filename
 import os.path
 import os
@@ -8,6 +8,7 @@ from random import randint
 from forms import *
 from run import app
 from consultas import *
+from sqlalchemy.exc import SQLAlchemyError
 from run import db, login_manager
 from mail import enviarMail
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
@@ -31,10 +32,10 @@ def has_permission(user, evento):
 @app.route('/<int:pag>', methods=["POST", "GET"])
 def index(pag=1):
 
-    # abort(400)
     filtro = Filtro()
     titulo = "Trap Eventos - Home"
     pag_tam = 9
+    paginar = True
     eventos = db.session.query(Evento).filter(Evento.fecha >= db.func.current_timestamp(),
                                               Evento.aprobado == 1).order_by(Evento.fecha).paginate(pag, pag_tam,
                                                                                                     error_out=False)
@@ -51,10 +52,9 @@ def index(pag=1):
             lista_eventos = lista_eventos.filter(Evento.nombre.ilike('%'+filtro.titulo.data+'%'))
 
         eventos = lista_eventos.filter(Evento.aprobado == 1).order_by(Evento.fecha)
+        paginar = False
 
-        return render_template('filtrar.html', lista_eventos=eventos, titulo=titulo, filtro=filtro)
-    else:
-        return render_template('main.html', eventos=eventos, titulo=titulo, filtro=filtro)
+    return render_template('main.html', eventos=eventos, titulo=titulo, filtro=filtro, paginar=paginar)
 
 
 @app.route('/mis-eventos')
@@ -69,7 +69,6 @@ def miseventos():
 
 @app.route('/ver-evento/<id>', methods=["POST", "GET"])
 def vistaevento(id):
-    # abort(500)
     evento = get_evento(id)
 
     if evento.aprobado == 1 or has_permission(current_user, evento):
@@ -84,8 +83,12 @@ def vistaevento(id):
 
                 comentario = Comentario(contenido=formulario.contenido.data, usuarioId=current_user.usuarioId,
                                         eventoId=id)
-                db.session.add(comentario)
-                db.session.commit()
+                try:
+                    db.session.add(comentario)
+                    db.session.commit()
+                except SQLAlchemyError as e:
+                    db.rollback()
+                    enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
 
                 return redirect(url_for('vistaevento', id=id))
             else:
@@ -102,7 +105,6 @@ def vistaevento(id):
 def crearevento():
     formulario = CrearEvento()
     titulo = "Nuevo Evento"
-
     if formulario.validate_on_submit():
         f = formulario.imagen.data
         filename = secure_filename(formulario.nombreevento.data + str(randint(1, 100)))
@@ -116,8 +118,12 @@ def crearevento():
                         hora=formulario.hora.data,
                         lugar=formulario.lugarevento.data, tipo=formulario.opciones.data, imagen=filename,
                         descripcion=formulario.descripcion.data, usuarioId=current_user.usuarioId)
-        db.session.add(evento)
-        db.session.commit()
+        try:
+            db.session.add(evento)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.rollback()
+            enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
 
         return redirect(url_for('miseventos'))
 
@@ -203,8 +209,12 @@ def aprobarEventoById(id):
 def eliminarEventoById(id):
     evento = get_evento(id)
     if current_user.is_admin() or current_user.is_owner(evento):
-        db.session.delete(evento)
-        db.session.commit()
+        try:
+            db.session.delete(evento)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.rollback()
+            enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
         return redirect(url_for('aprobareventos'))
     else:
         flash('Usted no tiene permiso para realizar esta accion', 'warning')
@@ -217,8 +227,13 @@ def eliminarComentarioById(id):
 
     comentario = get_comentario(id)
     if current_user.is_admin() or current_user.is_owner(comentario) or current_user.is_owner(comentario.evento):
-        db.session.delete(comentario)
-        db.session.commit()
+        try:
+            db.session.delete(comentario)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.rollback()
+            enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
+
         flash('Comentario eliminado!', 'success')
         return redirect(url_for('vistaevento', id=comentario.eventoId))
     else:
@@ -238,14 +253,17 @@ def ingresar():
             flash('Pronto recibiras un email de bienvenida!', 'success')
             formulario.mostrar_datos()
 
-            usuario = Usuario(nombre=formulario.nombre.data, apellido=formulario.apellido.data,
-                              email=formulario.email.data,
-                              password=formulario.contrasenia.data)
-            db.session.add(usuario)
-            db.session.commit()
+            usuario = Usuario(formulario.nombre.data, formulario.apellido.data, formulario.email.data,
+                              formulario.contrasenia.data)
+            try:
+                db.session.add(usuario)
+                db.session.commit()
+                enviarMail(formulario.email.data, 'Bienvenido a Trap Eventos!', 'cuenta_creada', formulario=formulario)
+                login_user(usuario, True)
+            except SQLAlchemyError as e:
+                db.rollback()
+                enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
 
-            enviarMail(formulario.email.data, 'Bienvenido a Trap Eventos!', 'cuenta_creada', formulario=formulario)
-            login_user(usuario, True)
             return redirect(url_for('index'))
         else:
             flash('Existe una cuenta registrada con el email ingresado. Intenta recuperar tu contraseña', 'danger')

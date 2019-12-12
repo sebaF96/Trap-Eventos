@@ -59,6 +59,12 @@ class Evento(db.Model):
 
 class Usuario(UserMixin, db.Model):
 
+    def __init__(self, nombre, apellido, email, psw):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.email = email
+        self.password_hash = generate_password_hash(psw)
+
     usuarioId = db.Column(db.Integer, primary_key=True)
 
     nombre = db.Column(db.String(40), nullable=False)
@@ -147,5 +153,3 @@ def load_user(user_id):
         return Usuario.query.get(int(user_id))
     except Exception:
         pass
-
-

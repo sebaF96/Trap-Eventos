@@ -119,6 +119,7 @@
 </form>
 <br/>
 
+{% if paginar is sameas True %}
 
 <div class="row">   <!-- CARD DECK INICIA -->
 
@@ -138,6 +139,8 @@
 <br>
 <br>
 
+
+
 <div class="row">
 
     <div class="col-md-2"> </div>
@@ -147,20 +150,20 @@
         <div class="pagination">
 
         {% if eventos.has_prev %}
-    <a href="{{ url_for('index', pag=eventos.prev_num) }}"> Anterior </a>
+    <a href="{{ url_for('index', pag=eventos.prev_num,_anchor='filter') }}"> Anterior </a>
             {% endif %}
 
 
             {% for i in range(1,(eventos.pages+1)) %}
             {% if eventos.page == i %}
-            <a class="active" href="{{ url_for('index', pag=i) }}">{{i}}</a>
+            <a class="active" href="#">{{i}}</a>
             {% else %}
-            <a href="{{ url_for('index', pag=i) }}">{{i}}</a>
+            <a href="{{ url_for('index', pag=i, _anchor='filter') }}">{{i}}</a>
             {% endif %}
             {% endfor %}
 
 {% if eventos.has_next %}
-    <a href="{{ url_for('index', pag=eventos.next_num) }}"> Siguiente </a>
+    <a href="{{ url_for('index', pag=eventos.next_num, _anchor='filter') }}"> Siguiente </a>
             {% endif %}
 
         </div>
@@ -173,8 +176,23 @@
 
 </div>
 
+    {% else %}
+
+    <div class="row">   <!-- CARD DECK INICIA -->
 
 
+    {% for evento in eventos %}
+
+
+    {{ mostrar_evento(evento)}}
+
+
+    {% endfor %}
+
+
+</div>
+
+{% endif %}
 
 
 

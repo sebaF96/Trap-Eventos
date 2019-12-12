@@ -14,6 +14,7 @@ def apiGetEventoById(id):
 
     return jsonify(evento.to_json())
 
+
 # Listar eventos
 # curl -H "Accept:application/json" http://localhost:5000/api/evento/
 @app.route('/')
@@ -45,6 +46,7 @@ def apiActualizarEvento(id):
 
     return jsonify(evento.to_json()), 201
 
+
 # Aprobar evento
 # curl -i -X PUT -H "Content-Type:application/json" -H
 # "Accept:application/json" http://localhost:5000/api/evento/47/aprobar
@@ -60,6 +62,7 @@ def apiAprobarEvento(id):
     enviarMail(evento.usuario.email, 'Evento aprobado!', 'evento_aprobado', evento=evento)
 
     return jsonify(evento.to_json()), 201
+
 
 # Eliminar evento
 # curl -i -X DELETE -H "Accept: application/json" http://localhost:5000/api/evento/134
@@ -88,6 +91,7 @@ def apiGetComentariosByEvento(evento):
 
     return jsonify({'Comentarios': [comentario.to_json() for comentario in lista_comentarios]})
 
+
 # Eliminar comentario
 # curl -i -X DELETE -H "Accept: application/json" http://localhost:5000/api/comentario/134
 @app.route('/api/comentario/<id>', methods=['DELETE'])
@@ -97,4 +101,3 @@ def apiEliminarComentarioById(id):
     db.session.delete(comentario)
     db.session.commit()
     return '', 204
-
