@@ -8,6 +8,7 @@ from random import randint
 from forms import *
 from run import app
 from consultas import *
+from sqlalchemy.exc import SQLAlchemyError
 from run import db, login_manager
 from mail import enviarMail
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
@@ -82,8 +83,12 @@ def vistaevento(id):
 
                 comentario = Comentario(contenido=formulario.contenido.data, usuarioId=current_user.usuarioId,
                                         eventoId=id)
-                db.session.add(comentario)
-                db.session.commit()
+                try:
+                    db.session.add(comentario)
+                    db.session.commit()
+                except SQLAlchemyError as e:
+                    db.rollback()
+                    enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
 
                 return redirect(url_for('vistaevento', id=id))
             else:
@@ -113,8 +118,12 @@ def crearevento():
                         hora=formulario.hora.data,
                         lugar=formulario.lugarevento.data, tipo=formulario.opciones.data, imagen=filename,
                         descripcion=formulario.descripcion.data, usuarioId=current_user.usuarioId)
-        db.session.add(evento)
-        db.session.commit()
+        try:
+            db.session.add(evento)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.rollback()
+            enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
 
         return redirect(url_for('miseventos'))
 
@@ -200,8 +209,12 @@ def aprobarEventoById(id):
 def eliminarEventoById(id):
     evento = get_evento(id)
     if current_user.is_admin() or current_user.is_owner(evento):
-        db.session.delete(evento)
-        db.session.commit()
+        try:
+            db.session.delete(evento)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.rollback()
+            enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
         return redirect(url_for('aprobareventos'))
     else:
         flash('Usted no tiene permiso para realizar esta accion', 'warning')
@@ -214,8 +227,13 @@ def eliminarComentarioById(id):
 
     comentario = get_comentario(id)
     if current_user.is_admin() or current_user.is_owner(comentario) or current_user.is_owner(comentario.evento):
-        db.session.delete(comentario)
-        db.session.commit()
+        try:
+            db.session.delete(comentario)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.rollback()
+            enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
+
         flash('Comentario eliminado!', 'success')
         return redirect(url_for('vistaevento', id=comentario.eventoId))
     else:
@@ -237,11 +255,15 @@ def ingresar():
 
             usuario = Usuario(formulario.nombre.data, formulario.apellido.data, formulario.email.data,
                               formulario.contrasenia.data)
-            db.session.add(usuario)
-            db.session.commit()
+            try:
+                db.session.add(usuario)
+                db.session.commit()
+                enviarMail(formulario.email.data, 'Bienvenido a Trap Eventos!', 'cuenta_creada', formulario=formulario)
+                login_user(usuario, True)
+            except SQLAlchemyError as e:
+                db.rollback()
+                enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
 
-            enviarMail(formulario.email.data, 'Bienvenido a Trap Eventos!', 'cuenta_creada', formulario=formulario)
-            login_user(usuario, True)
             return redirect(url_for('index'))
         else:
             flash('Existe una cuenta registrada con el email ingresado. Intenta recuperar tu contraseña', 'danger')
