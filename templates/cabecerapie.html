@@ -149,7 +149,8 @@
 
         <div class="container" style="text-align: center; font-size:large">
             <div class="row">
-                <div class="col-md-12">
+            <div class="col-md-1"></div>
+                <div class="col-md-10">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -163,6 +164,7 @@
                         {% endif %}
                     {% endwith %}
                 </div>
+            <div class="col-md-1"></div>
             </div>
         </div>
 
