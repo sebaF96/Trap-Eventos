@@ -48,7 +48,7 @@ def method_not_allowed(e):
 def internal_server_error(e):
     print(e)
     write_log(e)
-    enviarMail(os.getenv('ADMIN_MAIL'), '500. Internal server error', 'error', e=e)
+    mail.enviarMail(os.getenv('ADMIN_MAIL'), '500. Internal server error', 'error', e=e)
     # Si la solicitud acepta json y no HTML
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
@@ -76,7 +76,7 @@ def badrequest(e):
 def badgateway(e):
     print(e)
     write_log(e)
-    enviarMail(os.getenv('ADMIN_MAIL'), 'Bad Gateway 502 error', 'error', e=e)
+    mail.enviarMail(os.getenv('ADMIN_MAIL'), 'Bad Gateway 502 error', 'error', e=e)
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
         response = jsonify({'error': 'Bad Gateway'})
