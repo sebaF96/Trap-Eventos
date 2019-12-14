@@ -2,14 +2,11 @@
 
     <div class="col-md-4">
 
-        <div class="card" style="height: 700px">
-            <img style="height: 253px; width: 393px" src="{{ url_for('static', filename = 'images/'+evento.imagen ) }}"
-                 class="card-img-top" alt="...">
+        <div class="card">
+            <img class="card-img-top" style="width: border-box; height: 277px" alt={{ evento.nombre }} src="{{ url_for('static', filename = 'images/'+evento.imagen ) }}">
             <div class="card-body">
                 <h5 class="card-title"><a style="color: orangered; text-decoration: none"
-                                          href={{ url_for('vistaevento', id = evento.eventoId) }}> {{ evento.nombre }} </a><span
-                        class="badge badge-secondary"><span class="oi oi-tag"
-                                                            aria-hidden="true"></span> {{ evento.tipo }}</span></h5>
+                                          href={{ url_for('vistaevento', id = evento.eventoId) }}> {{ evento.nombre }} </a></h5>
                 <div style="height: 100px; overflow: hidden">
                     <p class="card-text"> {{ evento.descripcion }} </p>
                 </div>
@@ -19,17 +16,36 @@
             <div class="card-footer">
                 <ul class="list-group list-group-flush">
 
-                    <li class="list-group-item"><span class="badge badge-info"> <span class="oi oi-calendar"
-                                                                                      title="calendar"
-                                                                                      aria-hidden="true"></span> Fecha</span> {{ evento.fecha.strftime("%d %B, %Y") }}
+                    <li class="list-group-item">
+                        <span class="badge badge-info">
+                        <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span>
+                            Fecha
+                        </span>
+                        {{ evento.fecha.strftime("%d %B, %Y") }}
                     </li>
-                    <li class="list-group-item"><span class="badge badge-success"> <span class="oi oi-clock"
-                                                                                         title="clock"
-                                                                                         aria-hidden="true"></span> Hora</span> {{ evento.hora.strftime("%H:%M") }}
+
+                    <li class="list-group-item">
+                        <span class="badge badge-success">
+                            <span class="oi oi-clock" title="clock" aria-hidden="true"></span>
+                            Hora
+                        </span>
+                        {{ evento.hora.strftime("%H:%M") }}
                     </li>
-                    <li class="list-group-item"><span class="badge badge-secondary"> <span class="oi oi-map-marker"
-                                                                                           title="place"
-                                                                                           aria-hidden="true"></span> Lugar</span> {{ evento.lugar }}
+
+                    <li class="list-group-item">
+                        <span class="badge badge-danger">
+                            <span class="oi oi-map-marker" title="place" aria-hidden="true"></span>
+                            Lugar
+                        </span>
+                        {{ evento.lugar }}
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="badge badge-secondary"><span class="oi oi-tag" aria-hidden="true"></span>
+                            Categoria
+                        </span>
+                        {{ evento.tipo }}
+
                     </li>
 
                 </ul>

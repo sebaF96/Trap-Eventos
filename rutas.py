@@ -259,7 +259,7 @@ def ingresar():
                 db.session.add(usuario)
                 db.session.commit()
                 enviarMail(formulario.email.data, 'Bienvenido a Trap Eventos!', 'cuenta_creada', formulario=formulario)
-                login_user(usuario, True)
+                login_user(usuario, False)
             except SQLAlchemyError as e:
                 db.rollback()
                 enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
@@ -274,7 +274,7 @@ def ingresar():
         # Si el usuario existe y se verifica la pass
         if usuario is not None and usuario.verificar_pass(login.contraseniaLogin.data):
             # Loguear usuario
-            login_user(usuario, True)
+            login_user(usuario, login.remember_me.data)
             return redirect(url_for('index'))
         else:
             # Mostrar error de autenticación
