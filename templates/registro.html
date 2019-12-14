@@ -1,5 +1,5 @@
 {% extends 'cabecerapie.html' %}
-{% from "Macros_form.html" import mostrar_campo,mostrar_campo_radio, mostrar_campo_submit %}
+{% from "Macros_form.html" import mostrar_campo,mostrar_campo_bool, mostrar_campo_submit %}
 {% block contenido %}
 
 
@@ -147,6 +147,15 @@
                 </div>
             </div>
 
+                <div class="row">
+                    <div class="col-md-1"> </div>
+                    <div class="col-md-8" style="text-align: left">
+                        <br>
+                        {{ mostrar_campo_bool(login.remember_me) }}
+                    </div>
+
+                </div>
+
             <hr>
             <div class="row">
                 <div class="col-md-1"></div>
@@ -160,18 +169,7 @@
 
             </div>
 
-             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8" style="text-align: center">
 
-                    <br>
-                    <a href="#" style="color: orangered">Olvidaste tu contraseña?</a>
-                    </div>
-                <div class="col-md-2">
-
-                </div>
-
-            </div>
 
 
 

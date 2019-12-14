@@ -35,16 +35,16 @@ class CrearEvento(FlaskForm):
         # Esta funcion no deja ingresar una fecha en el pasado
 
     clasificacion = [
-        ('Estudio', 'Estudio'),
-        ('Deporte', 'Deporte'),
-        ('Festival', 'Festival'),
-        ('Obra', 'Obra'),
         ('Conferencia', 'Conferencia'),
         ('Curso', 'Curso'),
+        ('Deporte', 'Deporte'),
+        ('Estudio', 'Estudio'),
         ('E-Sport', 'E-Sport'),
-        ('Pasar el rato', 'Pasar el rato'),
-        ('Fiesta', 'Fiesta'),  # Lista de opciones de 'Categoria' usada para distintos forms.
+        ('Festival', 'Festival'),
+        ('Fiesta', 'Fiesta'),
         ('Musical', 'Musical'),
+        ('Obra', 'Obra'),
+        ('Pasar el rato', 'Pasar el rato'),
         ('Otro', 'Otro')
     ]
 
@@ -177,16 +177,16 @@ class Filtro(FlaskForm):
 
     categoria = [
         ('empty', 'Todas'),
-        ('Estudio', 'Estudio'),
-        ('Deporte', 'Deporte'),
-        ('Festival', 'Festival'),
-        ('Obra', 'Obra'),
         ('Conferencia', 'Conferencia'),
         ('Curso', 'Curso'),
+        ('Deporte', 'Deporte'),
+        ('Estudio', 'Estudio'),
         ('E-Sport', 'E-Sport'),
-        ('Pasar el rato', 'Pasar el rato'),
-        ('Fiesta', 'Fiesta'),  # Lista de opciones de 'Categoria' usada para distintos forms.
+        ('Festival', 'Festival'),
+        ('Fiesta', 'Fiesta'),
         ('Musical', 'Musical'),
+        ('Obra', 'Obra'),
+        ('Pasar el rato', 'Pasar el rato'),
         ('Otro', 'Otro')
     ]
 

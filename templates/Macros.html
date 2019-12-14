@@ -16,24 +16,35 @@
             <div class="card-footer">
                 <ul class="list-group list-group-flush">
 
-                    <li class="list-group-item"><span class="badge badge-info"> <span class="oi oi-calendar"
-                                                                                      title="calendar"
-                                                                                      aria-hidden="true"></span> Fecha</span> {{ evento.fecha.strftime("%d %B, %Y") }}
-                    </li>
-                    <li class="list-group-item"><span class="badge badge-success"> <span class="oi oi-clock"
-                                                                                         title="clock"
-                                                                                         aria-hidden="true"></span> Hora</span> {{ evento.hora.strftime("%H:%M") }}
-                    </li>
-                    <li class="list-group-item"><span class="badge badge-danger"> <span class="oi oi-map-marker"
-                                                                                           title="place"
-                                                                                           aria-hidden="true"></span> Lugar</span> {{ evento.lugar }}
+                    <li class="list-group-item">
+                        <span class="badge badge-info">
+                        <span class="oi oi-calendar" title="calendar" aria-hidden="true"></span>
+                            Fecha
+                        </span>
+                        {{ evento.fecha.strftime("%d %B, %Y") }}
                     </li>
 
                     <li class="list-group-item">
-                        <span
-                        class="badge badge-secondary"><span class="oi oi-tag"
-                                                            aria-hidden="true"></span> Categoria</span>
-{{ evento.tipo }}
+                        <span class="badge badge-success">
+                            <span class="oi oi-clock" title="clock" aria-hidden="true"></span>
+                            Hora
+                        </span>
+                        {{ evento.hora.strftime("%H:%M") }}
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="badge badge-danger">
+                            <span class="oi oi-map-marker" title="place" aria-hidden="true"></span>
+                            Lugar
+                        </span>
+                        {{ evento.lugar }}
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="badge badge-secondary"><span class="oi oi-tag" aria-hidden="true"></span>
+                            Categoria
+                        </span>
+                        {{ evento.tipo }}
 
                     </li>
 

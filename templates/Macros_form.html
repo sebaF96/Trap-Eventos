@@ -15,15 +15,11 @@
 	{{ mostrar_error(campo) }}
 {% endmacro %}
 
-
-{% macro mostrar_campo_radio(campo) %}
-	{{ campo.label }}
-	<br/>
-	{% for subfield in campo %}
-			{{ subfield }}
-	  		{{ subfield.label }}
-	{% endfor %}
-	{{mostrar_error(campo)}}
+{% macro mostrar_campo_bool(campo) %}
+    <tr>
+    <td></td>
+        <td> {{ campo.label }}    {{ campo }}</td>
+    </tr>
 {% endmacro %}
 
 
