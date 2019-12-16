@@ -41,8 +41,9 @@ def apiActualizarEvento(id):
     try:
         db.session.add(evento)
         db.session.commit()
-    except SQLAlchemyError:
+    except SQLAlchemyError as e:
         db.session.rollback()
+        print(e)
 
     return jsonify(evento.to_json()), 201
 

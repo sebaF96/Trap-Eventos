@@ -16,17 +16,13 @@ def write_logmail(e, message, subject, to):
         file.writelines('\nRecorda enviar mail de ' + str(subject) + ' a: ' + str(to))
 
 
-# Manejar error de página no encontrada
 @app.errorhandler(404)
 def page_not_found(e):
     print(e)
-    # Si la solicitud acepta json y no HTML
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
-        # Responder con JSON
         response = jsonify({'error': 'not found'})
         response.status_code = 404
         return response
-    # Sino responder con template HTML
     return render_template('errores/404.html'), 404
 
 
@@ -35,11 +31,9 @@ def method_not_allowed(e):
     print(e)
     write_log(e)
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
-        # Responder con JSON
         response = jsonify({'error': 'not found'})
         response.status_code = 405
         return response
-    # Sino responder con template HTML
     return render_template('errores/404.html'), 405
 
 
@@ -49,13 +43,11 @@ def internal_server_error(e):
     print(e)
     write_log(e)
     mail.enviarMail(os.getenv('ADMIN_MAIL'), '500. Internal server error', 'error', e=e)
-    # Si la solicitud acepta json y no HTML
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
         response = jsonify({'error': 'internal server error'})
         response.status_code = 500
         return response
-    # Sino responder con template HTML
     return render_template('errores/500.html'), 500
 
 
@@ -64,11 +56,9 @@ def badrequest(e):
     print(e)
     write_log(e)
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
-        # Responder con JSON
         response = jsonify({'error': 'Bad request'})
         response.status_code = 400
         return response
-    # Sino responder con template HTML
     return render_template('errores/500.html'), 400
 
 
@@ -78,11 +68,9 @@ def badgateway(e):
     write_log(e)
     mail.enviarMail(os.getenv('ADMIN_MAIL'), 'Bad Gateway 502 error', 'error', e=e)
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
-        # Responder con JSON
         response = jsonify({'error': 'Bad Gateway'})
         response.status_code = 400
         return response
-    # Sino responder con template HTML
     return render_template('errores/500.html'), 502
 
 
@@ -92,8 +80,6 @@ def generalException(e):
     write_log(e)
     mail.enviarMail(os.getenv('ADMIN_MAIL'), 'Unexpected error', 'error', e=e)
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
-        # Responder con JSON
         response = jsonify({'error': 'Unexpected error ' + str(e)})
         return response
-    # Sino responder con template HTML
     return render_template('errores/500.html'), 500

@@ -200,7 +200,6 @@ def aprobarEventoById(id):
 
         return redirect(url_for('aprobareventos'))
     else:
-        flash('Usted no tiene permiso para realizar esta accion', 'warning')
         return redirect(url_for('index'))
 
 
@@ -217,7 +216,6 @@ def eliminarEventoById(id):
             enviarMail(os.getenv('ADMIN_MAIL'), 'SQLAlchemy error', 'error', e=e)
         return redirect(url_for('aprobareventos'))
     else:
-        flash('Usted no tiene permiso para realizar esta accion', 'warning')
         return redirect(url_for('index'))
 
 
@@ -237,7 +235,6 @@ def eliminarComentarioById(id):
         flash('Comentario eliminado!', 'success')
         return redirect(url_for('vistaevento', id=comentario.eventoId))
     else:
-        flash('Usted no tiene permiso para realizar esta accion', 'warning')
         return redirect(url_for('index'))
 
 
@@ -266,19 +263,18 @@ def ingresar():
 
             return redirect(url_for('index'))
         else:
-            flash('Existe una cuenta registrada con el email ingresado. Intenta recuperar tu contraseña', 'danger')
+            flash('Existe una cuenta registrada con el email ingresado.', 'danger')
 
     if login.submit2.data is True and login.validate_on_submit():
 
         usuario = db.session.query(Usuario).filter(Usuario.email == login.emailLogin.data).first()
-        # Si el usuario existe y se verifica la pass
+
         if usuario is not None and usuario.verificar_pass(login.contraseniaLogin.data):
-            # Loguear usuario
             login_user(usuario, login.remember_me.data)
+            flash('Welcome back, ' + usuario.nombre + '!', 'success')
             return redirect(url_for('index'))
         else:
-            # Mostrar error de autenticación
-            flash('Fallo autenticacion, reintente.', 'danger')
+            flash('Su usuario y contraseña no coinciden, reintente.', 'danger')
 
     if not current_user.is_authenticated:
         return render_template('registro.html', titulo=titulo, formulario=formulario, login=login)
