@@ -83,7 +83,7 @@ class CrearEvento(FlaskForm):
                                 [
                                     validators.DataRequired(message="Por favor ingrese una descripcion"),
                                     validators.length(min=40, max=500,
-                                                      message='La descripcion del evento no puede ser tan corta.')
+                                                      message='La descripcion del evento debe tener entre 40 y 500 caracteres')
                                 ])
 
     opciones = SelectField('Tipo de evento', [
