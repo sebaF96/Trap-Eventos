@@ -34,4 +34,4 @@ if __name__ == '__main__':
     from rutas import *
     from rutas_api import *
     from errores import *
-    app.run(debug=True)
+    app.run()
